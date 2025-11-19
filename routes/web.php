@@ -25,4 +25,15 @@ Route::prefix('admin')->group(function () {
     Route::resource('productos', aProductoController::class);
 });
 
+/*
+====================== Testear la facade de admin: =========================
+*/
+ Route::get('/create', function () {
+   return view('admin.productos.create');
+});
+/*
+ Route::get('/create', function () {
+    return 'FUNCIONA';
+}); 
+*/
 
