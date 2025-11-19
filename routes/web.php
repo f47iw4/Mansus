@@ -28,11 +28,11 @@ Route::prefix('admin')->group(function () {
 /*
 ====================== Testear la facade de admin: =========================
 */
- Route::get('/create', function () {
-   return view('admin.productos.create');
+Route::get('/create', function () {
+    return view('admin.productos.create');
 });
 /*
- Route::get('/create', function () {
+Route::get('/create', function () {
     return 'FUNCIONA';
 }); 
 */
