@@ -8,14 +8,27 @@
     <textarea name="descripcion" class="form-control">{{ $producto->descripcion ?? '' }}</textarea>
 </div>
 
-<div class="mb-2">
+<div>
     <label>Categoría</label>
-    <input type="text" name="categoria" class="form-control" value="{{ $producto->categoria ?? '' }}">
+    <select name="categoria" class="form-control">
+        <option value="">-- Selecciona una categoría --</option>
+        <option value="Collar">Collar</option>
+        <option value="Pendientes">Pendientes</option>
+        <option value="Anillo">Anillo</option>
+        <option value="Pulsera">Pulsera</option>
+    </select>
 </div>
 
-<div class="mb-2">
+
+<div>
     <label>Material</label>
-    <input type="text" name="material" class="form-control" value="{{ $producto->material ?? '' }}">
+    <select name="material" class="form-control">
+        <option value="">-- Selecciona un material --</option>
+        <option value="Plata">Plata</option>
+        <option value="Oro">Oro</option>
+        <option value="Plata bañada">Plata bañada</option>
+        <option value="Otro">Otro</option>
+    </select>
 </div>
 
 <div class="mb-2">
