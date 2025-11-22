@@ -1,3 +1,4 @@
+
 <?php
 
 namespace App\Http\Controllers;
@@ -14,54 +15,18 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        $productos = Producto::where('activo', true)->get();
+        return view('productos.index', compact('productos'));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Producto $product)
+    public function show(Producto $producto)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Producto $product)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Producto $product)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Producto $product)
-    {
-        //
+        if (!$producto->activo) {
+            abort(404);
+        }
+        return view('productos.show', compact('producto'));
     }
 }
