@@ -15,6 +15,8 @@ $app = new Illuminate\Foundation\Application(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
 );
 
+// Se ha revertido a la estructura de arranque de Laravel 10
+// debido a que el servidor corre PHP 8.1 y Laravel 11 requiere PHP 8.2.
 /*
 |--------------------------------------------------------------------------
 | Bind Important Interfaces

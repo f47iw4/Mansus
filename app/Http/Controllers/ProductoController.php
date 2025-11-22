@@ -1,4 +1,3 @@
-
 <?php
 
 namespace App\Http\Controllers;
@@ -8,6 +7,9 @@ use Illuminate\Http\Request;
 
 // Controller para la parte pública de la aplicación,
 // no confundir con aProductoController (admin) para la parte privada (CRUD admin)
+// Este controlador maneja la parte PÚBLICA de la tienda.
+// Permite a los visitantes ver el listado de productos y sus detalles.
+// No requiere autenticación (a diferencia de Admin\aProductoController).
 class ProductoController extends Controller
 {
     /**

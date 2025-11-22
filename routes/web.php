@@ -5,9 +5,11 @@ use App\Http\Controllers\Admin\aProductoController;
 use App\Http\Controllers\ProductoController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('app');
 });
 
+// Rutas PÚBLICAS para el catálogo de productos.
+// Estas rutas son accesibles por cualquier usuario (no requiere login).
 Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index');
 Route::get('/productos/{producto}', [ProductoController::class, 'show'])->name('productos.show');
 

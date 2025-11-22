@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 
+// Este Provider es necesario en Laravel 10 para definir las rutas.
+// En Laravel 11 se maneja automáticamente en bootstrap/app.php.
 class RouteServiceProvider extends ServiceProvider
 {
     /**

@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+// Se renombró de 'Product' a 'Producto' para mantener consistencia con el nombre de la tabla 'productos'
+// y el idioma del proyecto (Español).
 class Producto extends Model
 {
     // nombre de la tabla

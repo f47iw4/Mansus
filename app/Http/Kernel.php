@@ -4,6 +4,8 @@ namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
+// Este archivo es necesario para Laravel 10.
+// En Laravel 11 se eliminó, pero lo hemos restaurado para compatibilidad con PHP 8.1.
 class Kernel extends HttpKernel
 {
     /**
