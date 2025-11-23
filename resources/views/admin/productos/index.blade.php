@@ -39,8 +39,29 @@
             <td>{{ $producto->material }}</td>
             <td>{{ $producto->precio }} €</td>
             <td>{{ $producto->stock }}</td>
-            <td>{{ $producto->activo ? 'Sí' : 'No' }}</td>
             <td>
+                @if($producto->activo)
+                    <span class="badge bg-success">Activo</span>
+                @else
+                    <span class="badge bg-secondary">Inactivo</span>
+                @endif
+            </td>
+            <td>
+                <!-- Botón de activar/desactivar rápido -->
+                <form action="{{ route('admin.productos.toggle', $producto) }}" method="POST" style="display:inline">
+                    @csrf
+                    @method('PATCH')
+                    @if($producto->activo)
+                        <button type="submit" class="btn btn-secondary btn-sm" title="Desactivar">
+                            <i class="bi bi-eye-slash"></i> Desactivar
+                        </button>
+                    @else
+                        <button type="submit" class="btn btn-success btn-sm" title="Activar">
+                            <i class="bi bi-eye"></i> Activar
+                        </button>
+                    @endif
+                </form>
+
                 <a href="{{ route('admin.productos.edit', $producto) }}" class="btn btn-warning btn-sm">Editar</a>
 
                 <form action="{{ route('admin.productos.destroy', $producto) }}" method="POST" style="display:inline">

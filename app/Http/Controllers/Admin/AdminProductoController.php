@@ -92,15 +92,28 @@ public function index()
     /** 
      * Remove the specified resource from storage.
      */
-public function destroy(Producto $producto)
-{
-    try {
+    public function destroy(Producto $producto)
+    {
+        try {
         $producto->delete();
         return redirect()->route('admin.productos.index')->with('success', 'Producto eliminado exitosamente.');
-    } catch (\Exception $e) {
+        } catch (\Exception $e) {
         return redirect()->route('admin.productos.index')->with('error', 'No se pudo eliminar el producto.');
+        }
     }
-}
+    /** 
+     * Toggle función rápida para activar/desactivar un producto
+     */
+    public function toggle(Producto $producto)
+    {
+        $producto->activo = !$producto->activo;
+        $producto->save();
+        
+        $mensaje = $producto->activo ? 'Producto activado exitosamente.' : 'Producto desactivado exitosamente.';
+        
+        return redirect()->route('admin.productos.index')->with('success', $mensaje);
+    }
+    
     
     /* Si falla el try-catch, descomentar este (y seguir probando)
     public function destroy(Producto $producto)

@@ -24,5 +24,11 @@ Route::prefix('admin')
         // Ruta API dentro del grupo admin
         Route::get('/api/productos', [AdminProductoController::class, 'apiIndex'])->name('api.productos');
     });
+    // rutas para la acción rápida de desactivar un producto o activarlo
+    Route::prefix('admin')->group(function () {
+    Route::resource('productos', AdminProductoController::class);
+    Route::patch('productos/{producto}/toggle', [AdminProductoController::class, 'toggle'])->name('admin.productos.toggle');
+});
+
 
 // ====================== Test / ejemplo ======================
