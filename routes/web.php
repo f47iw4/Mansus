@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminProductoController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\aProductoController;
 use App\Http\Controllers\ProductoController;
 
 Route::get('/', function () {
@@ -28,7 +28,7 @@ Route::get('/productos/{producto}', [ProductoController::class, 'show'])->name('
 - DELETE /admin/productos/{producto} -> destroy
 */
 Route::prefix('admin')->group(function () {
-    Route::resource('productos', aProductoController::class);
+    Route::resource('productos', AdminProductoController::class);
 });
 
 /*

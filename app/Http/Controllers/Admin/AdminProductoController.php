@@ -7,7 +7,7 @@ use App\Models\Producto;
 use Illuminate\Http\Request;
 
 //aProductoController: Controller para la parte privada (CRUD admin)
-class aProductoController extends Controller
+class AdminProductoController extends Controller
 {
     /**
      * Display a listing of the resource.
