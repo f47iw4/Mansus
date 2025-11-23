@@ -19,16 +19,14 @@ Route::prefix('admin')
     // ->middleware(['auth','is_admin']) // protección futura
     ->as('admin.') // esto agrega "admin." al nombre de todas las rutas dentro del grupo
     ->group(function () {
+        // Ruta para toggle (debe ir ANTES del resource para evitar conflictos)
+        Route::patch('productos/{producto}/toggle', [AdminProductoController::class, 'toggle'])->name('productos.toggle');
+        
+        // Resource routes
         Route::resource('productos', AdminProductoController::class);
         
         // Ruta API dentro del grupo admin
-        Route::get('/api/productos', [AdminProductoController::class, 'apiIndex'])->name('api.productos');
+        Route::get('api/productos', [AdminProductoController::class, 'apiIndex'])->name('api.productos');
     });
-    // rutas para la acción rápida de desactivar un producto o activarlo
-    Route::prefix('admin')->group(function () {
-    Route::resource('productos', AdminProductoController::class);
-    Route::patch('productos/{producto}/toggle', [AdminProductoController::class, 'toggle'])->name('admin.productos.toggle');
-});
-
 
 // ====================== Test / ejemplo ======================

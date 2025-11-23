@@ -1,5 +1,24 @@
 @extends('layouts.app')
+<div class="mb-3">
+    <form action="{{ route('admin.productos.toggle', $producto) }}" method="POST" style="display:inline">
+        @csrf
+        @method('PATCH')
+        @if($producto->activo)
+            <button type="submit" class="btn btn-warning">
+                <i class="bi bi-eye-slash"></i> Desactivar Producto
+            </button>
+        @else
+            <button type="submit" class="btn btn-success">
+                <i class="bi bi-eye"></i> Activar Producto
+            </button>
+        @endif
+    </form>
+</div>
 
+<hr class="my-4">
+
+<button type="submit" class="btn btn-primary">Actualizar</button>
+<a href="{{ route('admin.productos.index') }}" class="btn btn-secondary">Cancelar</a>
 @section('content')
 <h1>Editar Producto</h1>
 
