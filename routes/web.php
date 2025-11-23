@@ -20,9 +20,10 @@ Route::prefix('admin')
     ->as('admin.') // esto agrega "admin." al nombre de todas las rutas dentro del grupo
     ->group(function () {
         Route::resource('productos', AdminProductoController::class);
+        
+        // Ruta API dentro del grupo admin
+        Route::get('/api/productos', [AdminProductoController::class, 'apiIndex'])->name('api.productos');
     });
-    // Rutas API - Hace referencia al endpoint api REACT
-    Route::get('/api/admin/productos', [AdminProductoController::class, 'apiIndex']);
 
 // ====================== Test / ejemplo ======================
 // (temporal) para probar vistas de creación
