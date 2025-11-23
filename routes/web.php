@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminDashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\Admin\AdminProductoController;
@@ -27,6 +28,33 @@ Route::prefix('admin')
         
         // Ruta API dentro del grupo admin
         Route::get('api/productos', [AdminProductoController::class, 'apiIndex'])->name('api.productos');
+    });
+
+    Route::prefix('admin')
+    // ->middleware(['auth','is_admin']) // protección futura
+    ->as('admin.')
+    ->group(function () {
+        // Dashboard
+        Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
+        
+        // Productos
+        Route::patch('productos/{producto}/toggle', [AdminProductoController::class, 'toggle'])->name('productos.toggle');
+        Route::resource('productos', AdminProductoController::class);
+        Route::get('api/productos', [AdminProductoController::class, 'apiIndex'])->name('api.productos');
+        
+        // Clientes (las crearemos después)
+        Route::get('clientes', function() {
+            return 'Gestión de clientes - próximamente';
+        })->name('clientes.index');
+        
+        Route::get('clientes/create', function() {
+            return 'Crear cliente - próximamente';
+        })->name('clientes.create');
+        
+        // Estado del servidor (lo crearemos después)
+        Route::get('servidor', function() {
+            return 'Estado del servidor - próximamente';
+        })->name('servidor');
     });
 
 // ====================== Test / ejemplo ======================
