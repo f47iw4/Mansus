@@ -16,14 +16,13 @@ Route::get('/productos/{producto}', [ProductoController::class, 'show'])->name('
 // ====================== Rutas ADMIN - ProductoController ======================
 // Panel de administración de productos
 Route::prefix('admin')
-    ->middleware(['auth', 'is_admin']) // Protege todas las rutas admin
+    // ->middleware(['auth','is_admin']) // protección futura
+    ->as('admin.') // esto agrega "admin." al nombre de todas las rutas dentro del grupo
     ->group(function () {
-        // CRUD completo con resource
         Route::resource('productos', AdminProductoController::class);
     });
-
 // ====================== Test / ejemplo ======================
-// (temporal) para probar vistas de creación 
+// (temporal) para probar vistas de creación
 Route::get('/create', function () {
     return view('admin.productos.create');
 });
