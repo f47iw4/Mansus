@@ -26,7 +26,3 @@ Route::prefix('admin')
     });
 
 // ====================== Test / ejemplo ======================
-// (temporal) para probar vistas de creación
-Route::get('/create', function () {
-    return view('admin.productos.create');
-});

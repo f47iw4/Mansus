@@ -6,24 +6,24 @@ use App\Http\Controllers\Controller;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 
-//aProductoController: Controller para la parte privada (CRUD admin)
+//AdminProductoController: Controller para la parte privada (CRUD admin)
 class AdminProductoController extends Controller
 {
 
-    public function apiIndex() {
+
+public function apiIndex() {
     return Producto::orderBy('id', 'DESC')->paginate(25);
-}
+    }
+
 
     /**
      * Display a listing of the resource.
      */
-
 public function index()
 {
     $productos = Producto::orderBy('id', 'desc')->paginate(25);
     return view('admin.productos.index', compact('productos'));
 }
-
 
     /**
      * Show the form for creating a new resource.
@@ -37,29 +37,28 @@ public function index()
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    { {
-            $data = $request->validate([
-                'nombre' => 'required',
-                'descripcion' => 'nullable',
-                'categoria' => 'nullable',
-                'material' => 'nullable',
-                'precio' => 'required|numeric',
-                'stock' => 'required|integer',
-                'activo' => 'boolean',
-            ]);
+    {
+        $data = $request->validate([
+            'nombre' => 'required',
+            'descripcion' => 'nullable',
+            'categoria' => 'nullable',
+            'material' => 'nullable',
+            'precio' => 'required|numeric',
+            'stock' => 'required|integer',
+            'activo' => 'boolean',
+        ]);
 
-            Producto::create($data);
+        Producto::create($data);
 
-            return redirect()->route('admin.productos.index')->with('success', 'Producto creado exitosamente.');
-        }
+        return redirect()->route('admin.productos.index')->with('success', 'Producto creado exitosamente.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Producto $producto)
     {
-        //
+        return view('admin.productos.show', compact('producto'));
     }
 
     /**
@@ -84,8 +83,10 @@ public function index()
             'stock' => 'required|integer',
             'activo' => 'boolean',
         ]);
+        
         $producto->update($data);
-        return redirect()->route('productos.index')->with('success', 'Producto actualizado exitosamente.');
+        
+        return redirect()->route('admin.productos.index')->with('success', 'Producto actualizado exitosamente.');
     }
 
     /**
@@ -94,6 +95,6 @@ public function index()
     public function destroy(Producto $producto)
     {
         $producto->delete();
-        return redirect()->route('productos.index')->with('success', 'Producto eliminado.');
+        return redirect()->route('admin.productos.index')->with('success', 'Producto eliminado.');
     }
 }

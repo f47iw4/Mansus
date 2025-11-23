@@ -27,8 +27,10 @@
             <td>{{ $producto->stock }}</td>
             <td>{{ $producto->activo ? 'Sí' : 'No' }}</td>
             <td>
-                <a href="{{ route('productos.edit', $producto) }}" class="btn btn-warning btn-sm">Editar</a>
-                <form action="{{ route('productos.destroy', $producto) }}" method="POST" style="display:inline">
+                <a href="{{ route('admin.productos.edit', $producto) }}" class="btn btn-warning btn-sm">Editar</a>
+
+                <form action="{{ route('admin.productos.destroy', $producto) }}" method="POST" style="display:inline">
+
                     @csrf
                     @method('DELETE')
                     <button onclick="return confirm('¿Eliminar producto?')" class="btn btn-danger btn-sm">Borrar</button>

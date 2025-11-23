@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Producto extends Model
 {
     protected $table = 'productos';
-    protected $primaryKey = 'id_producto';
+   // protected $primaryKey = 'id_producto';
     public $incrementing = true;
     protected $keyType = 'int';
     public $timestamps = false;
@@ -29,3 +29,4 @@ class Producto extends Model
         'fecha_creacion' => 'datetime',
     ];
 }
+
