@@ -17,13 +17,13 @@ class AdminProductoController extends Controller
     /**
      * Display a listing of the resource.
      */
-/*
+
 public function index()
 {
     $productos = Producto::orderBy('id', 'desc')->paginate(25);
     return view('admin.productos.index', compact('productos'));
 }
-*/
+
 
     /**
      * Show the form for creating a new resource.
