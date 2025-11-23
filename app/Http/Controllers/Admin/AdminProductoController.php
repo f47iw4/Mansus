@@ -9,15 +9,21 @@ use Illuminate\Http\Request;
 //aProductoController: Controller para la parte privada (CRUD admin)
 class AdminProductoController extends Controller
 {
+
+    public function apiIndex() {
+    return Producto::orderBy('id', 'DESC')->paginate(25);
+}
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $productos = Producto::orderBy('id', 'DESC')->paginate(25);
-
-        return view('admin.productos.index', compact('productos'));
-    }
+/*
+public function index()
+{
+    $productos = Producto::orderBy('id', 'desc')->paginate(25);
+    return view('admin.productos.index', compact('productos'));
+}
+*/
 
     /**
      * Show the form for creating a new resource.

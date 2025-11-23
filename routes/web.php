@@ -21,6 +21,9 @@ Route::prefix('admin')
     ->group(function () {
         Route::resource('productos', AdminProductoController::class);
     });
+    // Rutas API - Hace referencia al endpoint api REACT
+    Route::get('/api/admin/productos', [AdminProductoController::class, 'apiIndex']);
+
 // ====================== Test / ejemplo ======================
 // (temporal) para probar vistas de creación
 Route::get('/create', function () {
