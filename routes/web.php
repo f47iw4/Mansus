@@ -31,6 +31,14 @@ Route::prefix('admin')->group(function () {
     Route::resource('productos', AdminProductoController::class);
 });
 
+
+
+
+
+
+
+
+
 /*
 ====================== Testear la facade de admin: =========================
 */
