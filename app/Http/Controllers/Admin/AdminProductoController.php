@@ -74,27 +74,39 @@ public function index()
      */
     public function update(Request $request, Producto $producto)
     {
-        $data = $request->validate([
-            'nombre' => 'required',
-            'descripcion' => 'nullable',
-            'categoria' => 'nullable',
-            'material' => 'nullable',
-            'precio' => 'required|numeric',
-            'stock' => 'required|integer',
-            'activo' => 'boolean',
-        ]);
-        
-        $producto->update($data);
-        
-        return redirect()->route('admin.productos.index')->with('success', 'Producto actualizado exitosamente.');
+    $data = $request->validate([
+        'nombre' => 'required',
+        'descripcion' => 'nullable',
+        'categoria' => 'nullable',
+        'material' => 'nullable',
+        'precio' => 'required|numeric',
+        'stock' => 'required|integer',
+        'activo' => 'boolean',
+    ]);
+    
+    $producto->update($data);
+    
+    return redirect()->route('admin.productos.index')->with('success', 'Producto actualizado exitosamente.');
     }
 
-    /**
+    /** 
      * Remove the specified resource from storage.
      */
+public function destroy(Producto $producto)
+{
+    try {
+        $producto->delete();
+        return redirect()->route('admin.productos.index')->with('success', 'Producto eliminado exitosamente.');
+    } catch (\Exception $e) {
+        return redirect()->route('admin.productos.index')->with('error', 'No se pudo eliminar el producto.');
+    }
+}
+    
+    /* Si falla el try-catch, descomentar este (y seguir probando)
     public function destroy(Producto $producto)
     {
         $producto->delete();
         return redirect()->route('admin.productos.index')->with('success', 'Producto eliminado.');
     }
+        */
 }
