@@ -16,21 +16,8 @@ Route::get('/productos/{producto}', [ProductoController::class, 'show'])->name('
 
 // ====================== Rutas ADMIN - ProductoController ======================
 // Panel de administración de productos
+// ====================== Rutas ADMIN ======================
 Route::prefix('admin')
-    // ->middleware(['auth','is_admin']) // protección futura
-    ->as('admin.') // esto agrega "admin." al nombre de todas las rutas dentro del grupo
-    ->group(function () {
-        // Ruta para toggle (debe ir ANTES del resource para evitar conflictos)
-        Route::patch('productos/{producto}/toggle', [AdminProductoController::class, 'toggle'])->name('productos.toggle');
-        
-        // Resource routes
-        Route::resource('productos', AdminProductoController::class);
-        
-        // Ruta API dentro del grupo admin
-        Route::get('api/productos', [AdminProductoController::class, 'apiIndex'])->name('api.productos');
-    });
-
-    Route::prefix('admin')
     // ->middleware(['auth','is_admin']) // protección futura
     ->as('admin.')
     ->group(function () {
@@ -40,9 +27,11 @@ Route::prefix('admin')
         // Productos
         Route::patch('productos/{producto}/toggle', [AdminProductoController::class, 'toggle'])->name('productos.toggle');
         Route::resource('productos', AdminProductoController::class);
-        Route::get('api/productos', [AdminProductoController::class, 'apiIndex'])->name('api.productos');
         
-        // Clientes (las crearemos después)
+        // API interna para el dashboard (versionada v1)
+        Route::get('api/v1/productos', [AdminProductoController::class, 'apiIndex'])->name('api.productos');
+        
+        // Clientes
         Route::get('clientes', function() {
             return 'Gestión de clientes - próximamente';
         })->name('clientes.index');
@@ -51,7 +40,7 @@ Route::prefix('admin')
             return 'Crear cliente - próximamente';
         })->name('clientes.create');
         
-        // Estado del servidor (lo crearemos después)
+        // Estado del servidor
         Route::get('servidor', function() {
             return 'Estado del servidor - próximamente';
         })->name('servidor');
