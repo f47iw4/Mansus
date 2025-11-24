@@ -22,7 +22,7 @@ class ProductoController extends Controller
     public function index()
     {
         $productos = Producto::where('activo', true)
-                            ->orderBy('id', 'desc')
+                            ->orderBy('id_producto', 'desc')
                             ->paginate(25);
         return view('productos.index', compact('productos'));
     }
