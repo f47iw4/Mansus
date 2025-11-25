@@ -15,7 +15,7 @@ class AdminProductoController extends Controller
 
 
 public function apiIndex() {
-    $productos = Producto::with(['categoria', 'material'])->orderBy('id_producto', 'DESC')->paginate(25);
+    $productos = Producto::orderBy('id_producto', 'DESC')->paginate(25);
     return ProductoResource::collection($productos);
     }
 
@@ -25,7 +25,7 @@ public function apiIndex() {
      */
 public function index()
 {
-    $productos = Producto::with(['categoria', 'material'])->orderBy('id_producto', 'desc')->paginate(25);
+    $productos = Producto::orderBy('id_producto', 'desc')->paginate(25);
     return view('admin.productos.index', compact('productos'));
 }
 

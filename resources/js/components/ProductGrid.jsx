@@ -14,7 +14,7 @@ export default function ProductGrid({ category = 'Todo', searchQuery = '' }) {
         const fetchProducts = async () => {
             setLoading(true);
             try {
-                const response = await axios.get('/admin/api/productos');
+                const response = await axios.get('/api/productos');
                 const data = response.data.data || response.data;
                 // Map database products to frontend format
                 const mappedProducts = data.map(p => ({

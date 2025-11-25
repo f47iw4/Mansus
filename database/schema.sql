@@ -1,3 +1,17 @@
+CREATE DATABASE IF NOT EXISTS tienda_joyas;
+USE tienda_joyas;
+
+DROP TABLE IF EXISTS 
+    Pagos, 
+    Pedido_Producto, 
+    Carrito_Producto, 
+    Pedidos, 
+    Direcciones, 
+    Productos, 
+    Carritos, 
+    Usuarios;
+
+-- resto de tu código...
 -- ======================================================
 --  CREACIÓN DE TABLAS - tiendaOnline
 -- ======================================================
