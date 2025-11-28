@@ -21,6 +21,7 @@ export default function ProductGrid({ category = 'Todo', searchQuery = '' }) {
                     id: p.id_producto,
                     name: p.nombre,
                     price: parseFloat(p.precio),
+                    precio: parseFloat(p.precio), // For CartContext compatibility
                     image: p.imagen || 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?q=80&w=2070&auto=format&fit=crop',
                     category: p.categoria || 'General'
                 }));

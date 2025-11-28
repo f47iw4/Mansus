@@ -104,6 +104,56 @@ public function index()
         
         return redirect()->route('admin.productos.index')->with('success', $mensaje);
     }
+
+    /**
+     * API: Store a newly created product and return JSON
+     */
+    public function apiStore(StoreProductoRequest $request)
+    {
+        $data = $request->validated();
+        $producto = Producto::create($data);
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'Producto creado exitosamente.',
+            'data' => new ProductoResource($producto)
+        ], 201);
+    }
+
+    /**
+     * API: Update the specified product and return JSON
+     */
+    public function apiUpdate(UpdateProductoRequest $request, Producto $producto)
+    {
+        $data = $request->validated();
+        $producto->update($data);
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'Producto actualizado exitosamente.',
+            'data' => new ProductoResource($producto)
+        ], 200);
+    }
+
+    /**
+     * API: Delete the specified product and return JSON
+     */
+    public function apiDestroy(Producto $producto)
+    {
+        try {
+            $producto->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Producto eliminado exitosamente.'
+            ], 200);
+        } catch (\Exception $e) {
+            \Log::error('Error deleting product: '.$e->getMessage(), ['id' => $producto->id]);
+            return response()->json([
+                'success' => false,
+                'message' => 'No se pudo eliminar el producto.'
+            ], 500);
+        }
+    }
     
     
     /* Si falla el try-catch, descomentar este (y seguir probando)

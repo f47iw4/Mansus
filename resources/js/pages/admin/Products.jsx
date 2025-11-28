@@ -12,11 +12,10 @@ export default function Products() {
     const [searchTerm, setSearchTerm] = useState('');
     const [filterCategory, setFilterCategory] = useState('');
 
-    // Fetch products
     const fetchProducts = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('/admin/api/productos');
+            const response = await axios.get('/api/admin/productos');
             // Check if response.data is paginated (Laravel paginate returns { data: [...], ... })
             const data = response.data.data ? response.data.data : response.data;
             setProducts(data);
@@ -46,10 +45,10 @@ export default function Products() {
         try {
             if (editingProduct) {
                 // Update
-                await axios.put(`/admin/productos/${editingProduct.id}`, formData, config);
+                await axios.put(`/api/admin/productos/${editingProduct.id_producto}`, formData, config);
             } else {
                 // Create
-                await axios.post('/admin/productos', formData, config);
+                await axios.post('/api/admin/productos', formData, config);
             }
             // Refresh list
             fetchProducts();
@@ -64,7 +63,7 @@ export default function Products() {
 
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         try {
-            await axios.delete(`/admin/productos/${id}`, {
+            await axios.delete(`/api/admin/productos/${id}`, {
                 headers: {
                     'X-CSRF-TOKEN': csrfToken,
                     'Accept': 'application/json'
@@ -213,7 +212,7 @@ export default function Products() {
                                         </td>
                                         <td className="px-6 py-4">
                                             <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${product.activo ? 'bg-green-50 text-green-700 border-green-100' :
-                                                    'bg-red-50 text-red-700 border-red-100'
+                                                'bg-red-50 text-red-700 border-red-100'
                                                 }`}>
                                                 {product.activo ? 'Activo' : 'Inactivo'}
                                             </span>

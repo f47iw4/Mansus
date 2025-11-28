@@ -16,6 +16,7 @@ class ProductoResource extends JsonResource
     {
         return [
             'id' => $this->id_producto,
+            'id_producto' => $this->id_producto, // For React components
             'nombre' => $this->nombre,
             'descripcion' => $this->descripcion,
             'categoria' => $this->categoria,

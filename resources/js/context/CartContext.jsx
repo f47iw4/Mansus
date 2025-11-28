@@ -54,7 +54,10 @@ export const CartProvider = ({ children }) => {
 
     const clearCart = () => setCart([]);
 
-    const cartTotal = cart.reduce((total, item) => total + item.precio * item.quantity, 0);
+    const cartTotal = cart.reduce((total, item) => {
+        const price = parseFloat(item.precio || item.price || 0);
+        return total + (price * item.quantity);
+    }, 0);
     const cartCount = cart.reduce((count, item) => count + item.quantity, 0);
 
     return (
