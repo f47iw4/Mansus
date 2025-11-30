@@ -33,4 +33,3 @@ class Producto extends Model
         'fecha_creacion' => 'datetime',
     ];
 }
-

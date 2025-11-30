@@ -13,31 +13,30 @@
     <input type="file" name="imagen" class="form-control" accept="image/*">
     @if(isset($producto) && $producto->imagen)
         <div class="mt-2">
-            <img src="{{ $producto->imagen }}" alt="Imagen actual" style="max-height: 100px;">
+            <img src="{{ asset($producto->imagen) }}" alt="Imagen actual" style="max-height: 100px;">
         </div>
     @endif
 </div>
 
-<div>
+<div class="mb-2">
     <label>Categoría</label>
     <select name="categoria" class="form-control">
         <option value="">-- Selecciona una categoría --</option>
-        <option value="Collar">Collar</option>
-        <option value="Pendientes">Pendientes</option>
-        <option value="Anillo">Anillo</option>
-        <option value="Pulsera">Pulsera</option>
+        <option value="Collar" {{ (isset($producto) && $producto->categoria == 'Collar') ? 'selected' : '' }}>Collar</option>
+        <option value="Pendientes" {{ (isset($producto) && $producto->categoria == 'Pendientes') ? 'selected' : '' }}>Pendientes</option>
+        <option value="Anillo" {{ (isset($producto) && $producto->categoria == 'Anillo') ? 'selected' : '' }}>Anillo</option>
+        <option value="Pulsera" {{ (isset($producto) && $producto->categoria == 'Pulsera') ? 'selected' : '' }}>Pulsera</option>
     </select>
 </div>
 
-
-<div>
+<div class="mb-2">
     <label>Material</label>
     <select name="material" class="form-control">
         <option value="">-- Selecciona un material --</option>
-        <option value="Plata">Plata</option>
-        <option value="Oro">Oro</option>
-        <option value="Plata bañada">Plata bañada</option>
-        <option value="Otro">Otro</option>
+        <option value="Plata" {{ (isset($producto) && $producto->material == 'Plata') ? 'selected' : '' }}>Plata</option>
+        <option value="Oro" {{ (isset($producto) && $producto->material == 'Oro') ? 'selected' : '' }}>Oro</option>
+        <option value="Plata bañada" {{ (isset($producto) && $producto->material == 'Plata bañada') ? 'selected' : '' }}>Plata bañada</option>
+        <option value="Otro" {{ (isset($producto) && $producto->material == 'Otro') ? 'selected' : '' }}>Otro</option>
     </select>
 </div>
 
@@ -57,4 +56,12 @@
         <option value="1" {{ isset($producto) && $producto->activo ? 'selected' : '' }}>Sí</option>
         <option value="0" {{ isset($producto) && !$producto->activo ? 'selected' : '' }}>No</option>
     </select>
+</div>
+
+<div class="mb-2">
+    <label>Imagen</label>
+    <input type="file" name="imagen" class="form-control">
+    @if(isset($producto) && $producto->imagen)
+        <small>Imagen actual: {{ $producto->imagen }}</small>
+    @endif
 </div>

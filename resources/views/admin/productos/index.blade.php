@@ -27,6 +27,7 @@
             <th>Material</th>
             <th>Precio</th>
             <th>Stock</th>
+            <th>Imagen</th>
             <th>Activo</th>
             <th>Acciones</th>
         </tr>
@@ -39,11 +40,21 @@
             <td>{{ $producto->material }}</td>
             <td>{{ $producto->precio }} €</td>
             <td>{{ $producto->stock }}</td>
+            <td>{{ $producto->imagen }}</td>
             <td>
                 @if($producto->activo)
                     <span class="badge bg-success">Activo</span>
                 @else
                     <span class="badge bg-secondary">Inactivo</span>
+                @endif
+            </td>
+            <td>
+                @if($producto->imagen)
+                    <img src="{{ asset($producto->imagen) }}" alt="{{ $producto->nombre }}" style="max-height: 50px;">
+                    <br>
+                    {{ $producto->imagen }} <!-- Muestra el nombre/URL -->
+                @else
+                    Sin imagen
                 @endif
             </td>
             <td>

@@ -45,12 +45,12 @@ public function index()
         $this->authorize('create', Producto::class);
         $data = $request->validated();
 
+        // Usar el sistema de archivos de Amine (más eficiente)
         if ($request->hasFile('imagen')) {
-            $file = $request->file('imagen');
-            $path = $file->getRealPath();
-            $image = file_get_contents($path);
-            $base64 = base64_encode($image);
-            $data['imagen'] = 'data:' . $file->getClientMimeType() . ';base64,' . $base64;
+            $imagen = $request->file('imagen');
+            $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
+            $imagen->move(public_path('images/productos'), $nombreImagen);
+            $data['imagen'] = 'images/productos/' . $nombreImagen;
         }
 
         Producto::create($data);
@@ -108,6 +108,7 @@ public function index()
         return redirect()->route('admin.productos.index')->with('error', 'No se pudo eliminar el producto.');
         }
     }
+    
     /** 
      * Toggle función rápida para activar/desactivar un producto
      */
