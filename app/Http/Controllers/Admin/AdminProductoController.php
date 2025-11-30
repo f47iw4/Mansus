@@ -82,12 +82,12 @@ public function index()
         $this->authorize('update', $producto);
         $data = $request->validated();
 
+        // Usar el sistema de archivos de Amine
         if ($request->hasFile('imagen')) {
-            $file = $request->file('imagen');
-            $path = $file->getRealPath();
-            $image = file_get_contents($path);
-            $base64 = base64_encode($image);
-            $data['imagen'] = 'data:' . $file->getClientMimeType() . ';base64,' . $base64;
+            $imagen = $request->file('imagen');
+            $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
+            $imagen->move(public_path('images/productos'), $nombreImagen);
+            $data['imagen'] = 'images/productos/' . $nombreImagen;
         }
 
         $producto->update($data);
