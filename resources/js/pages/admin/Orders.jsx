@@ -1,13 +1,38 @@
 import React from 'react';
-import { Eye, Download, Filter, Search, Calendar, Package } from 'lucide-react';
+import { Eye, Download, Filter, Search, Calendar, Package, MapPin } from 'lucide-react';
 import { motion } from 'framer-motion';
+import WorldMap from '../../components/ui/world-map';
 
 export default function Orders() {
     const orders = [
-        { id: '#ORD-7829', customer: 'Sofia Martinez', email: 'sofia@example.com', date: '24 Nov 2025', total: 450.00, status: 'Completed', items: 3 },
-        { id: '#ORD-7830', customer: 'Carlos Ruiz', email: 'carlos@example.com', date: '24 Nov 2025', total: 120.50, status: 'Processing', items: 1 },
-        { id: '#ORD-7831', customer: 'Ana Lopez', email: 'ana@example.com', date: '23 Nov 2025', total: 890.00, status: 'Pending', items: 5 },
-        { id: '#ORD-7832', customer: 'Miguel Angel', email: 'miguel@example.com', date: '23 Nov 2025', total: 65.00, status: 'Cancelled', items: 1 },
+        { id: '#ORD-7829', customer: 'Sofia Martinez', email: 'sofia@example.com', date: '24 Nov 2025', total: 450.00, status: 'Completed', items: 3, location: 'Madrid, España' },
+        { id: '#ORD-7830', customer: 'Carlos Ruiz', email: 'carlos@example.com', date: '24 Nov 2025', total: 120.50, status: 'Processing', items: 1, location: 'Barcelona, España' },
+        { id: '#ORD-7831', customer: 'Ana Lopez', email: 'ana@example.com', date: '23 Nov 2025', total: 890.00, status: 'Pending', items: 5, location: 'Buenos Aires, Argentina' },
+        { id: '#ORD-7832', customer: 'Miguel Angel', email: 'miguel@example.com', date: '23 Nov 2025', total: 65.00, status: 'Cancelled', items: 1, location: 'Ciudad de México, México' },
+    ];
+
+    // Map dots - from Spain (warehouse) to customer locations
+    const mapDots = [
+        {
+            start: { lat: 40.4168, lng: -3.7038 }, // Madrid, España
+            end: { lat: 41.3851, lng: 2.1734 }, // Barcelona
+        },
+        {
+            start: { lat: 40.4168, lng: -3.7038 }, // Madrid
+            end: { lat: -34.6037, lng: -58.3816 }, // Buenos Aires
+        },
+        {
+            start: { lat: 40.4168, lng: -3.7038 }, // Madrid
+            end: { lat: 19.4326, lng: -99.1332 }, // Ciudad de México
+        },
+        {
+            start: { lat: 40.4168, lng: -3.7038 }, // Madrid
+            end: { lat: 51.5074, lng: -0.1278 }, // London
+        },
+        {
+            start: { lat: 40.4168, lng: -3.7038 }, // Madrid
+            end: { lat: 40.7128, lng: -74.0060 }, // New York
+        },
     ];
 
     const getStatusStyle = (status) => {
@@ -36,7 +61,7 @@ export default function Orders() {
     };
 
     return (
-        <div className="space-y-6 max-w-7xl mx-auto">
+        <div className="space-y-8 max-w-7xl mx-auto">
             {/* Header */}
             <motion.div
                 initial={{ opacity: 0, y: -20 }}
@@ -59,11 +84,84 @@ export default function Orders() {
                 </motion.button>
             </motion.div>
 
-            {/* Table Card */}
+            {/* World Map Section */}
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
+                className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl shadow-2xl overflow-hidden border border-slate-700"
+            >
+                <div className="p-8">
+                    <div className="text-center mb-8">
+                        <motion.h2
+                            className="font-bold text-3xl md:text-4xl text-white mb-4"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                        >
+                            Envíos{" "}
+                            <span className="text-blue-400">
+                                {"Internacionales".split("").map((char, idx) => (
+                                    <motion.span
+                                        key={idx}
+                                        className="inline-block"
+                                        initial={{ x: -10, opacity: 0 }}
+                                        animate={{ x: 0, opacity: 1 }}
+                                        transition={{ duration: 0.5, delay: idx * 0.04 }}
+                                    >
+                                        {char}
+                                    </motion.span>
+                                ))}
+                            </span>
+                        </motion.h2>
+                        <p className="text-sm md:text-lg text-slate-400 max-w-2xl mx-auto">
+                            Conectamos con clientes de todo el mundo. Envíos rápidos y seguros desde nuestro almacén en Madrid.
+                        </p>
+                    </div>
+
+                    {/* World Map */}
+                    <div className="h-[400px] relative">
+                        <WorldMap dots={mapDots} />
+                    </div>
+
+                    {/* Stats */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+                        <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10">
+                            <div className="flex items-center gap-2 text-blue-400 mb-2">
+                                <MapPin size={20} />
+                                <span className="text-sm font-medium">Países</span>
+                            </div>
+                            <p className="text-2xl font-bold text-white">12</p>
+                        </div>
+                        <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10">
+                            <div className="flex items-center gap-2 text-green-400 mb-2">
+                                <Package size={20} />
+                                <span className="text-sm font-medium">Envíos</span>
+                            </div>
+                            <p className="text-2xl font-bold text-white">847</p>
+                        </div>
+                        <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10">
+                            <div className="flex items-center gap-2 text-purple-400 mb-2">
+                                <Calendar size={20} />
+                                <span className="text-sm font-medium">Este Mes</span>
+                            </div>
+                            <p className="text-2xl font-bold text-white">127</p>
+                        </div>
+                        <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10">
+                            <div className="flex items-center gap-2 text-yellow-400 mb-2">
+                                <Download size={20} />
+                                <span className="text-sm font-medium">En Tránsito</span>
+                            </div>
+                            <p className="text-2xl font-bold text-white">23</p>
+                        </div>
+                    </div>
+                </div>
+            </motion.div>
+
+            {/* Table Card */}
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
                 className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-xl border border-gray-100 overflow-hidden"
             >
                 {/* Toolbar */}
@@ -102,6 +200,7 @@ export default function Orders() {
                             <tr>
                                 <th className="px-6 py-4">ID Pedido</th>
                                 <th className="px-6 py-4">Cliente</th>
+                                <th className="px-6 py-4">Ubicación</th>
                                 <th className="px-6 py-4">Fecha</th>
                                 <th className="px-6 py-4">Items</th>
                                 <th className="px-6 py-4">Total</th>
@@ -123,6 +222,12 @@ export default function Orders() {
                                         <div>
                                             <p className="font-medium text-gray-900">{order.customer}</p>
                                             <p className="text-xs text-gray-500">{order.email}</p>
+                                        </div>
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <div className="flex items-center gap-1 text-gray-600">
+                                            <MapPin size={14} className="text-gray-400" />
+                                            <span className="text-sm">{order.location}</span>
                                         </div>
                                     </td>
                                     <td className="px-6 py-4 text-gray-500">{order.date}</td>

@@ -39,12 +39,12 @@ export default function Checkout() {
 
     if (orderComplete) {
         return (
-            <div className="min-h-screen pt-32 pb-16 flex items-center justify-center bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200">
+            <div className="min-h-screen pt-32 pb-16 flex items-center justify-center bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 dark:from-gray-900 dark:via-gray-800 dark:to-black">
                 <motion.div
                     initial={{ opacity: 0, scale: 0.8, y: 20 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     transition={{ type: "spring", bounce: 0.4 }}
-                    className="bg-white/80 backdrop-blur-xl p-12 rounded-3xl shadow-2xl text-center max-w-md border border-gray-100"
+                    className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl p-12 rounded-3xl shadow-2xl text-center max-w-md border border-gray-100 dark:border-gray-700"
                 >
                     <motion.div
                         initial={{ scale: 0 }}
@@ -58,7 +58,7 @@ export default function Checkout() {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3 }}
-                        className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent mb-4"
+                        className="text-3xl font-bold text-gray-900 dark:text-white mb-4"
                     >
                         ¡Pedido Confirmado!
                     </motion.h2>
@@ -66,7 +66,7 @@ export default function Checkout() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.4 }}
-                        className="text-gray-600 mb-2"
+                        className="text-gray-600 dark:text-gray-300 mb-2"
                     >
                         Gracias por tu compra. Recibirás un email de confirmación en breve.
                     </motion.p>
@@ -74,12 +74,12 @@ export default function Checkout() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.5 }}
-                        className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl"
+                        className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/30 dark:to-purple-900/30 rounded-xl"
                     >
-                        <p className="text-sm font-medium text-gray-700 mb-1">Número de Pedido</p>
-                        <p className="text-lg font-bold text-gray-900">#{Math.random().toString(36).substr(2, 9).toUpperCase()}</p>
+                        <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Número de Pedido</p>
+                        <p className="text-lg font-bold text-gray-900 dark:text-white">#{Math.random().toString(36).substr(2, 9).toUpperCase()}</p>
                     </motion.div>
-                    <p className="text-sm text-gray-500 mt-6 flex items-center justify-center gap-2">
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-6 flex items-center justify-center gap-2">
                         <Loader className="animate-spin" size={16} />
                         Redirigiendo a la tienda...
                     </p>
@@ -90,17 +90,16 @@ export default function Checkout() {
 
     if (cart.length === 0) {
         return (
-            <div className="min-h-screen pt-32 pb-16 flex items-center justify-center bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200">
+            <div className="min-h-screen pt-32 pb-16 flex items-center justify-center bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 dark:from-gray-900 dark:via-gray-800 dark:to-black">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-center"
-                >
-                    <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    className="text-center">
+                    <div className="w-20 h-20 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-6">
                         <Package2 size={40} className="text-gray-400" />
                     </div>
-                    <h2 className="text-2xl font-bold text-gray-900 mb-4">Tu carrito está vacío</h2>
-                    <p className="text-gray-600 mb-8">Añade productos para continuar con la compra</p>
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Tu carrito está vacío</h2>
+                    <p className="text-gray-600 dark:text-gray-300 mb-8">Añade productos para continuar con la compra</p>
                     <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
@@ -115,14 +114,14 @@ export default function Checkout() {
     }
 
     return (
-        <div className="min-h-screen pt-32 pb-16 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200">
+        <div className="min-h-screen pt-32 pb-16 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 dark:from-gray-900 dark:via-gray-800 dark:to-black">
             <div className="container mx-auto px-6 max-w-7xl">
                 <motion.button
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     whileHover={{ x: -5 }}
                     onClick={() => navigate('/')}
-                    className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-8 font-medium"
+                    className="flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white mb-8 font-medium"
                 >
                     <ArrowLeft size={20} />
                     Volver a la tienda
@@ -136,8 +135,8 @@ export default function Checkout() {
                         transition={{ delay: 0.1 }}
                         className="lg:col-span-2"
                     >
-                        <div className="bg-white/80 backdrop-blur-xl p-8 rounded-2xl shadow-xl border border-gray-100">
-                            <h2 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent mb-8">
+                        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700">
+                            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
                                 Información de Envío
                             </h2>
                             <form onSubmit={handleSubmit} className="space-y-6">
@@ -150,7 +149,7 @@ export default function Checkout() {
                                         value={formData.name}
                                         onChange={handleChange}
                                         required
-                                        className="px-4 py-3.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all shadow-sm"
+                                        className="px-4 py-3.5 bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all shadow-sm"
                                     />
                                     <motion.input
                                         whileFocus={{ scale: 1.02 }}
@@ -258,8 +257,8 @@ export default function Checkout() {
                         transition={{ delay: 0.2 }}
                         className="lg:col-span-1"
                     >
-                        <div className="bg-white/80 backdrop-blur-xl p-8 rounded-2xl shadow-xl border border-gray-100 sticky top-24">
-                            <h3 className="text-xl font-bold text-gray-900 mb-6">Resumen del Pedido</h3>
+                        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-  700 sticky top-24">
+                            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6">Resumen del Pedido</h3>
                             <div className="space-y-4 mb-6 max-h-64 overflow-y-auto">
                                 {cart.map((item, index) => (
                                     <motion.div
@@ -267,15 +266,15 @@ export default function Checkout() {
                                         initial={{ opacity: 0, x: -10 }}
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: index * 0.05 }}
-                                        className="flex gap-4 p-3 rounded-lg hover:bg-gray-50 transition-colors"
+                                        className="flex gap-4 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                                     >
-                                        <div className="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden">
+                                        <div className="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden">
                                             <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                                         </div>
                                         <div className="flex-1">
-                                            <p className="font-medium text-gray-900 text-sm line-clamp-1">{item.name}</p>
-                                            <p className="text-xs text-gray-500 mt-0.5">Cantidad: {item.quantity}</p>
-                                            <p className="text-sm font-semibold text-gray-900 mt-1">€{(item.price * item.quantity).toFixed(2)}</p>
+                                            <p className="font-medium text-gray-900 dark:text-white text-sm line-clamp-1">{item.name}</p>
+                                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Cantidad: {item.quantity}</p>
+                                            <p className="text-sm font-semibold text-gray-900 dark:text-white mt-1">€{(item.price * item.quantity).toFixed(2)}</p>
                                         </div>
                                     </motion.div>
                                 ))}

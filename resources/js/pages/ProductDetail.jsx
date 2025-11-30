@@ -28,16 +28,16 @@ export default function ProductDetail() {
     };
 
     return (
-        <div className="pt-24 pb-16 container mx-auto px-6">
+        <div className="pt-24 pb-16 container mx-auto px-6 bg-white dark:bg-gray-900 min-h-screen">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                 {/* Images */}
                 <div className="space-y-4">
-                    <div className="aspect-square bg-gray-100 overflow-hidden rounded-lg">
+                    <div className="aspect-square bg-gray-100 dark:bg-gray-800 overflow-hidden rounded-lg">
                         <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover" />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                         {product.images.map((img, idx) => (
-                            <div key={idx} className="aspect-square bg-gray-100 overflow-hidden rounded-lg">
+                            <div key={idx} className="aspect-square bg-gray-100 dark:bg-gray-800 overflow-hidden rounded-lg">
                                 <img src={img} alt={`${product.name} ${idx}`} className="w-full h-full object-cover" />
                             </div>
                         ))}
@@ -50,20 +50,20 @@ export default function ProductDetail() {
                         <div className="flex">
                             {[1, 2, 3, 4, 5].map(i => <Star key={i} size={16} fill="currentColor" />)}
                         </div>
-                        <span className="text-gray-500">(24 reseñas)</span>
+                        <span className="text-gray-500 dark:text-gray-400">(24 reseñas)</span>
                     </div>
 
-                    <h1 className="text-3xl md:text-4xl font-serif text-gray-900 mb-4">{product.name}</h1>
-                    <p className="text-2xl text-gray-900 font-light mb-6">€{product.price.toFixed(2)}</p>
+                    <h1 className="text-3xl md:text-4xl font-serif text-gray-900 dark:text-white mb-4">{product.name}</h1>
+                    <p className="text-2xl text-gray-900 dark:text-white font-light mb-6">€{product.price.toFixed(2)}</p>
 
-                    <p className="text-gray-600 leading-relaxed mb-8">
+                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-8">
                         {product.description}
                     </p>
 
                     <div className="space-y-4 mb-8">
                         {product.features.map((feature, idx) => (
-                            <div key={idx} className="flex items-center gap-3 text-sm text-gray-700">
-                                <div className="w-1.5 h-1.5 bg-gray-900 rounded-full" />
+                            <div key={idx} className="flex items-center gap-3 text-sm text-gray-700 dark:text-gray-300">
+                                <div className="w-1.5 h-1.5 bg-gray-900 dark:bg-white rounded-full" />
                                 {feature}
                             </div>
                         ))}
@@ -73,8 +73,8 @@ export default function ProductDetail() {
                         onClick={handleAddToCart}
                         disabled={isAdded}
                         className={`w-full py-4 uppercase tracking-widest transition-all flex items-center justify-center gap-3 mb-8 font-medium rounded-lg ${isAdded
-                                ? 'bg-green-600 text-white'
-                                : 'bg-gray-900 text-white hover:bg-gray-800'
+                            ? 'bg-green-600 text-white'
+                            : 'bg-gray-900 text-white hover:bg-gray-800'
                             }`}
                     >
                         {isAdded ? (
@@ -90,12 +90,12 @@ export default function ProductDetail() {
                         )}
                     </button>
 
-                    <div className="grid grid-cols-2 gap-4 text-sm text-gray-500">
-                        <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
+                    <div className="grid grid-cols-2 gap-4 text-sm text-gray-500 dark:text-gray-400">
+                        <div className="flex items-center gap-3 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
                             <Truck size={20} />
                             <span>Envío Gratuito</span>
                         </div>
-                        <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
+                        <div className="flex items-center gap-3 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
                             <ShieldCheck size={20} />
                             <span>Garantía de 2 años</span>
                         </div>

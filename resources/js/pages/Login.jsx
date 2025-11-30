@@ -32,32 +32,32 @@ export default function Login() {
     };
 
     return (
-        <div className="min-h-screen pt-20 flex items-center justify-center bg-gray-50 px-4">
+        <div className="min-h-screen pt-20 flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-white w-full max-w-md shadow-2xl overflow-hidden rounded-2xl"
+                className="bg-white dark:bg-gray-800 w-full max-w-md shadow-2xl overflow-hidden rounded-2xl"
             >
                 <div className="p-8 md:p-12">
                     <div className="text-center mb-10">
-                        <h2 className="text-3xl font-serif text-gray-900 mb-2">
+                        <h2 className="text-3xl font-serif text-gray-900 dark:text-white mb-2">
                             {isLogin ? 'Bienvenido de nuevo' : 'Crear Cuenta'}
                         </h2>
-                        <p className="text-gray-500 text-sm">
+                        <p className="text-gray-500 dark:text-gray-400 text-sm">
                             {isLogin ? 'Ingresa a tu cuenta MANSUS' : 'Únete al mundo exclusivo de MANSUS'}
                         </p>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="space-y-2">
-                            <label className="text-xs uppercase tracking-widest text-gray-500 font-semibold">Email</label>
+                            <label className="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400 font-semibold">Email</label>
                             <div className="relative">
                                 <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                                 <input
                                     type="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 focus:border-gray-900 focus:ring-0 outline-none transition-colors"
+                                    className="w-full pl-12 pr-4 py-3 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-600 focus:border-gray-900 dark:focus:border-white focus:ring-0 outline-none transition-colors"
                                     placeholder="nombre@ejemplo.com"
                                     required
                                 />
@@ -65,14 +65,14 @@ export default function Login() {
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-xs uppercase tracking-widest text-gray-500 font-semibold">Contraseña</label>
+                            <label className="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400 font-semibold">Contraseña</label>
                             <div className="relative">
                                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                                 <input
                                     type="password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 focus:border-gray-900 focus:ring-0 outline-none transition-colors"
+                                    className="w-full pl-12 pr-4 py-3 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-600 focus:border-gray-900 dark:focus:border-white focus:ring-0 outline-none transition-colors"
                                     placeholder="••••••••"
                                     required
                                 />

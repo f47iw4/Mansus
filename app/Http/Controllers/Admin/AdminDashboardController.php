@@ -26,13 +26,17 @@ class AdminDashboardController extends Controller
         // Clientes registrados en los últimos 7 días
         $clientesRecientes = User::where('created_at', '>=', now()->subDays(7))->count();
 
+        // Productos más vendidos
+        $productosMasVendidos = Producto::orderBy('ventas', 'desc')->take(5)->get();
+
         return view('admin.dashboard', compact(
             'totalProductos',
             'productosActivos',
             'productosInactivos',
             'totalClientes',
             'clientesVIP',
-            'clientesRecientes'
+            'clientesRecientes',
+            'productosMasVendidos'
         ));
     }
 }

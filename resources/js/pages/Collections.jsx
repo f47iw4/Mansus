@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const collections = [
     {
@@ -62,9 +63,12 @@ export default function Collections() {
                                 <p className="text-gray-600 leading-relaxed mb-8 text-lg">
                                     {collection.description}
                                 </p>
-                                <button className="bg-gray-900 text-white px-8 py-3 uppercase tracking-widest text-sm hover:bg-gray-800 transition">
+                                <Link
+                                    to="/joyas"
+                                    className="inline-block bg-gray-900 text-white px-8 py-3 uppercase tracking-widest text-sm hover:bg-gray-800 transition"
+                                >
                                     Ver Colección
-                                </button>
+                                </Link>
                             </div>
                         </motion.div>
                     ))}

@@ -86,7 +86,7 @@ export default function Products() {
         setIsModalOpen(true);
     };
 
-    // Client-side filtering (since API doesn't support it yet without modifying controller)
+    // Client-side filtering
     const filteredProducts = products.filter(product => {
         const matchesSearch = product.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
             (product.descripcion && product.descripcion.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -138,9 +138,9 @@ export default function Products() {
                             className="px-4 py-2.5 border border-gray-200 rounded-xl text-gray-600 hover:bg-gray-50 focus:outline-none bg-white"
                         >
                             <option value="">Todas las Categorías</option>
-                            <option value="Anillos">Anillos</option>
-                            <option value="Collares">Collares</option>
-                            <option value="Pulseras">Pulseras</option>
+                            <option value="Anillo">Anillos</option>
+                            <option value="Collar">Collares</option>
+                            <option value="Pulsera">Pulseras</option>
                             <option value="Pendientes">Pendientes</option>
                             <option value="Relojes">Relojes</option>
                         </select>
@@ -175,7 +175,7 @@ export default function Products() {
                                 </tr>
                             ) : (
                                 filteredProducts.map((product) => (
-                                    <tr key={product.id} className="hover:bg-gray-50/80 transition-colors group">
+                                    <tr key={product.id_producto} className="hover:bg-gray-50/80 transition-colors group">
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-4">
                                                 <div className="w-12 h-12 rounded-lg bg-gray-100 overflow-hidden border border-gray-100 flex items-center justify-center">
@@ -226,7 +226,7 @@ export default function Products() {
                                                     <Edit size={18} />
                                                 </button>
                                                 <button
-                                                    onClick={() => handleDelete(product.id)}
+                                                    onClick={() => handleDelete(product.id_producto)}
                                                     className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                                                 >
                                                     <Trash2 size={18} />

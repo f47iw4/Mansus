@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ShoppingBag, Search, Menu, X, User } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Header() {
@@ -33,13 +34,14 @@ export default function Header() {
     const navLinks = [
         { name: 'Joyas', path: '/joyas' },
         { name: 'Relojes', path: '/relojes' },
-        { name: 'Colecciones', path: '/colecciones' },
         { name: 'La Marca', path: '/marca' },
     ];
 
     return (
         <header
-            className={`fixed w-full z-50 transition-all duration-300 ${isScrolled || isMobileMenuOpen || isSearchOpen ? 'bg-white text-gray-900 shadow-sm' : 'bg-transparent text-white'
+            className={`fixed w-full z-50 transition-all duration-300 ${isScrolled || isMobileMenuOpen || isSearchOpen
+                ? 'bg-white dark:bg-gray-900 text-gray-900 dark:text-white shadow-sm'
+                : 'bg-transparent text-white'
                 }`}
         >
             <div className="container mx-auto px-6 py-4">
@@ -73,6 +75,9 @@ export default function Header() {
 
                     {/* Icons */}
                     <div className="flex items-center space-x-6">
+
+
+                        {/* Search */}
                         <div className="relative">
                             <AnimatePresence>
                                 {isSearchOpen && (
@@ -88,7 +93,7 @@ export default function Header() {
                                             value={searchQuery}
                                             onChange={(e) => setSearchQuery(e.target.value)}
                                             placeholder="Buscar..."
-                                            className="w-full bg-transparent border-b border-gray-900 text-sm focus:outline-none pb-1"
+                                            className="w-full bg-transparent border-b border-gray-900 dark:border-white text-sm focus:outline-none pb-1"
                                             autoFocus
                                         />
                                     </motion.form>
@@ -127,7 +132,7 @@ export default function Header() {
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
-                        className="absolute top-full left-0 w-full bg-white text-gray-900 shadow-lg md:hidden"
+                        className="absolute top-full left-0 w-full bg-white dark:bg-gray-900 text-gray-900 dark:text-white shadow-lg md:hidden"
                     >
                         <nav className="flex flex-col p-6 space-y-4">
                             {navLinks.map((link) => (
@@ -135,7 +140,7 @@ export default function Header() {
                                     key={link.name}
                                     to={link.path}
                                     onClick={() => setIsMobileMenuOpen(false)}
-                                    className="text-sm uppercase tracking-widest py-2 border-b border-gray-100"
+                                    className="text-sm uppercase tracking-widest py-2 border-b border-gray-100 dark:border-gray-800"
                                 >
                                     {link.name}
                                 </Link>
@@ -143,7 +148,7 @@ export default function Header() {
                             <Link
                                 to="/login"
                                 onClick={() => setIsMobileMenuOpen(false)}
-                                className="text-sm uppercase tracking-widest py-2 border-b border-gray-100 flex items-center gap-2"
+                                className="text-sm uppercase tracking-widest py-2 border-b border-gray-100 dark:border-gray-800 flex items-center gap-2"
                             >
                                 <User size={16} /> Iniciar Sesión
                             </Link>

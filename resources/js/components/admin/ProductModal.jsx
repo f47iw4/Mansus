@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Save, Loader } from 'lucide-react';
+import { X, Save, Loader, Upload, Image as ImageIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function ProductModal({ isOpen, onClose, product, onSave }) {
@@ -10,8 +10,10 @@ export default function ProductModal({ isOpen, onClose, product, onSave }) {
         material: '',
         precio: '',
         stock: '',
-        activo: true
+        activo: true,
+        imagen: ''
     });
+    const [imagePreview, setImagePreview] = useState('');
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -23,8 +25,10 @@ export default function ProductModal({ isOpen, onClose, product, onSave }) {
                 material: product.material || '',
                 precio: product.precio || '',
                 stock: product.stock || '',
-                activo: product.activo !== undefined ? Boolean(product.activo) : true
+                activo: product.activo !== undefined ? Boolean(product.activo) : true,
+                imagen: product.imagen || ''
             });
+            setImagePreview(product.imagen || '');
         } else {
             setFormData({
                 nombre: '',
@@ -33,8 +37,10 @@ export default function ProductModal({ isOpen, onClose, product, onSave }) {
                 material: '',
                 precio: '',
                 stock: '',
-                activo: true
+                activo: true,
+                imagen: ''
             });
+            setImagePreview('');
         }
     }, [product, isOpen]);
 
@@ -44,6 +50,12 @@ export default function ProductModal({ isOpen, onClose, product, onSave }) {
             ...prev,
             [name]: type === 'checkbox' ? checked : value
         }));
+    };
+
+    const handleImageUrlChange = (e) => {
+        const url = e.target.value;
+        setFormData(prev => ({ ...prev, imagen: url }));
+        setImagePreview(url);
     };
 
     const handleSubmit = async (e) => {
@@ -75,7 +87,7 @@ export default function ProductModal({ isOpen, onClose, product, onSave }) {
                         initial={{ opacity: 0, scale: 0.95, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                        className="relative bg-white rounded-2xl shadow-xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh]"
+                        className="relative bg-white rounded-2xl shadow-xl w-full max-w-3xl overflow-hidden flex flex-col max-h-[90vh]"
                     >
                         <div className="flex items-center justify-between p-6 border-b border-gray-100">
                             <h2 className="text-xl font-bold text-gray-900">
@@ -87,9 +99,55 @@ export default function ProductModal({ isOpen, onClose, product, onSave }) {
                         </div>
 
                         <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-6 space-y-6">
+                            {/* Image Section */}
+                            <div className="space-y-4">
+                                <label className="text-sm font-medium text-gray-700">Imagen del Producto</label>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {/* Image Preview */}
+                                    <div className="aspect-square rounded-xl border-2 border-dashed border-gray-300 overflow-hidden bg-gray-50 flex items-center justify-center">
+                                        {imagePreview ? (
+                                            <img
+                                                src={imagePreview}
+                                                alt="Preview"
+                                                className="w-full h-full object-cover"
+                                                onError={() => setImagePreview('')}
+                                            />
+                                        ) : (
+                                            <div className="text-center p-4">
+                                                <ImageIcon size={48} className="mx-auto text-gray-400 mb-2" />
+                                                <p className="text-sm text-gray-500">Vista previa de la imagen</p>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* URL Input */}
+                                    <div className="space-y-3">
+                                        <div className="space-y-2">
+                                            <label className="text-xs font-medium text-gray-600">URL de la Imagen</label>
+                                            <input
+                                                type="url"
+                                                value={formData.imagen}
+                                                onChange={handleImageUrlChange}
+                                                className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent outline-none transition-all text-sm"
+                                                placeholder="https://ejemplo.com/imagen.jpg"
+                                            />
+                                        </div>
+                                        <div className="bg-blue-50 border border-blue-100 rounded-lg p-3">
+                                            <p className="text-xs text-blue-800 font-medium mb-2">💡 Sugerencias:</p>
+                                            <ul className="text-xs text-blue-700 space-y-1 list-disc list-inside">
+                                                <li>Usa Unsplash: unsplash.com</li>
+                                                <li>Formato: JPG, PNG, WebP</li>
+                                                <li>Tamaño recomendado: 800x800px</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Basic Info */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-gray-700">Nombre</label>
+                                    <label className="text-sm font-medium text-gray-700">Nombre *</label>
                                     <input
                                         type="text"
                                         name="nombre"
@@ -101,17 +159,18 @@ export default function ProductModal({ isOpen, onClose, product, onSave }) {
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-gray-700">Categoría</label>
+                                    <label className="text-sm font-medium text-gray-700">Categoría *</label>
                                     <select
                                         name="categoria"
                                         value={formData.categoria}
                                         onChange={handleChange}
+                                        required
                                         className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent outline-none transition-all"
                                     >
                                         <option value="">Seleccionar...</option>
-                                        <option value="Anillos">Anillos</option>
-                                        <option value="Collares">Collares</option>
-                                        <option value="Pulseras">Pulseras</option>
+                                        <option value="Anillo">Anillos</option>
+                                        <option value="Collar">Collares</option>
+                                        <option value="Pulsera">Pulseras</option>
                                         <option value="Pendientes">Pendientes</option>
                                         <option value="Relojes">Relojes</option>
                                     </select>
@@ -132,7 +191,7 @@ export default function ProductModal({ isOpen, onClose, product, onSave }) {
 
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-gray-700">Precio (€)</label>
+                                    <label className="text-sm font-medium text-gray-700">Precio (€) *</label>
                                     <input
                                         type="number"
                                         name="precio"
@@ -145,7 +204,7 @@ export default function ProductModal({ isOpen, onClose, product, onSave }) {
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-gray-700">Stock</label>
+                                    <label className="text-sm font-medium text-gray-700">Stock *</label>
                                     <input
                                         type="number"
                                         name="stock"

@@ -22,7 +22,9 @@ class Producto extends Model
         'precio',
         'stock',
         'activo',
-        'fecha_creacion'
+        'fecha_creacion',
+        'imagen',
+        'ventas'
     ];
 
     protected $casts = [

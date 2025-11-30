@@ -22,7 +22,7 @@
 @section('content')
 <h1>Editar Producto</h1>
 
-<form action="{{ route('admin.productos.update', $producto) }}" method="POST">
+<form action="{{ route('admin.productos.update', $producto) }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
 
@@ -38,6 +38,19 @@
         <label for="descripcion" class="form-label">Descripción</label>
         <textarea class="form-control @error('descripcion') is-invalid @enderror" id="descripcion" name="descripcion" rows="3">{{ old('descripcion', $producto->descripcion) }}</textarea>
         @error('descripcion')
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
+
+    <div class="mb-3">
+        <label for="imagen" class="form-label">Imagen</label>
+        <input type="file" class="form-control @error('imagen') is-invalid @enderror" id="imagen" name="imagen" accept="image/*">
+        @if($producto->imagen)
+            <div class="mt-2">
+                <img src="{{ $producto->imagen }}" alt="Imagen actual" style="max-height: 100px;" class="rounded">
+            </div>
+        @endif
+        @error('imagen')
             <div class="invalid-feedback">{{ $message }}</div>
         @enderror
     </div>

@@ -8,6 +8,16 @@
     <textarea name="descripcion" class="form-control">{{ $producto->descripcion ?? '' }}</textarea>
 </div>
 
+<div class="mb-2">
+    <label>Imagen</label>
+    <input type="file" name="imagen" class="form-control" accept="image/*">
+    @if(isset($producto) && $producto->imagen)
+        <div class="mt-2">
+            <img src="{{ $producto->imagen }}" alt="Imagen actual" style="max-height: 100px;">
+        </div>
+    @endif
+</div>
+
 <div>
     <label>Categoría</label>
     <select name="categoria" class="form-control">

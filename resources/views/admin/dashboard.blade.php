@@ -95,6 +95,62 @@
                 </div>
             </div>
         </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0"><i class="bi bi-graph-up text-primary"></i> Productos Más Vendidos</h5>
+                </div>
+                <div class="card-body">
+                    @if($productosMasVendidos->count() > 0)
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Producto</th>
+                                        <th>Categoría</th>
+                                        <th>Precio</th>
+                                        <th>Ventas</th>
+                                        <th>Stock</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($productosMasVendidos as $producto)
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    @if($producto->imagen)
+                                                        <img src="{{ $producto->imagen }}" alt="{{ $producto->nombre }}" class="rounded me-2" style="width: 40px; height: 40px; object-fit: cover;">
+                                                    @else
+                                                        <div class="rounded me-2 bg-secondary d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px;">
+                                                            <i class="bi bi-image"></i>
+                                                        </div>
+                                                    @endif
+                                                    {{ $producto->nombre }}
+                                                </div>
+                                            </td>
+                                            <td>{{ $producto->categoria }}</td>
+                                            <td>€{{ number_format($producto->precio, 2) }}</td>
+                                            <td><strong>{{ $producto->ventas }}</strong></td>
+                                            <td>
+                                                <span class="badge bg-{{ $producto->stock < 5 ? 'danger' : 'success' }}">
+                                                    {{ $producto->stock }}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @else
+                        <p class="text-muted text-center py-3">No hay datos de ventas disponibles.</p>
+                    @endif
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Sección de accesos rápidos -->

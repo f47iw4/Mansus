@@ -45,6 +45,14 @@ public function index()
         $this->authorize('create', Producto::class);
         $data = $request->validated();
 
+        if ($request->hasFile('imagen')) {
+            $file = $request->file('imagen');
+            $path = $file->getRealPath();
+            $image = file_get_contents($path);
+            $base64 = base64_encode($image);
+            $data['imagen'] = 'data:' . $file->getClientMimeType() . ';base64,' . $base64;
+        }
+
         Producto::create($data);
 
         return redirect()->route('admin.productos.index')->with('success', 'Producto creado exitosamente.');
@@ -73,6 +81,14 @@ public function index()
     {
         $this->authorize('update', $producto);
         $data = $request->validated();
+
+        if ($request->hasFile('imagen')) {
+            $file = $request->file('imagen');
+            $path = $file->getRealPath();
+            $image = file_get_contents($path);
+            $base64 = base64_encode($image);
+            $data['imagen'] = 'data:' . $file->getClientMimeType() . ';base64,' . $base64;
+        }
 
         $producto->update($data);
 
@@ -111,6 +127,15 @@ public function index()
     public function apiStore(StoreProductoRequest $request)
     {
         $data = $request->validated();
+        
+        if ($request->hasFile('imagen')) {
+            $file = $request->file('imagen');
+            $path = $file->getRealPath();
+            $image = file_get_contents($path);
+            $base64 = base64_encode($image);
+            $data['imagen'] = 'data:' . $file->getClientMimeType() . ';base64,' . $base64;
+        }
+
         $producto = Producto::create($data);
         
         return response()->json([
@@ -126,6 +151,15 @@ public function index()
     public function apiUpdate(UpdateProductoRequest $request, Producto $producto)
     {
         $data = $request->validated();
+
+        if ($request->hasFile('imagen')) {
+            $file = $request->file('imagen');
+            $path = $file->getRealPath();
+            $image = file_get_contents($path);
+            $base64 = base64_encode($image);
+            $data['imagen'] = 'data:' . $file->getClientMimeType() . ';base64,' . $base64;
+        }
+
         $producto->update($data);
         
         return response()->json([

@@ -41,6 +41,7 @@ export default function Dashboard() {
         totalValue: 0
     });
     const [recentProducts, setRecentProducts] = useState([]);
+    const [mostSoldProducts, setMostSoldProducts] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -50,7 +51,8 @@ export default function Dashboard() {
     const fetchDashboardData = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('/admin/api/productos');
+            // Corrected API endpoint
+            const response = await axios.get('/api/admin/productos');
             const products = response.data.data || response.data;
 
             // Calculate stats
@@ -66,8 +68,14 @@ export default function Dashboard() {
                 totalValue
             });
 
-            // Get recent products (last 5)
-            setRecentProducts(products.slice(0, 5));
+            // Get recent products (last 5 - assuming higher ID is more recent or we could sort by date if available)
+            // Since we don't have created_at in the mock controller/seeder explicitly sorted, we'll take the last ones
+            const sortedByRecent = [...products].reverse();
+            setRecentProducts(sortedByRecent.slice(0, 5));
+
+            // Get most sold products
+            const sortedBySales = [...products].sort((a, b) => (b.ventas || 0) - (a.ventas || 0));
+            setMostSoldProducts(sortedBySales.slice(0, 5));
         } catch (error) {
             console.error('Error fetching dashboard data:', error);
         } finally {
@@ -135,60 +143,104 @@ export default function Dashboard() {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Recent Products */}
-                <div className="bg-white p-6 rounded-2xl shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-gray-100">
-                    <div className="flex items-center justify-between mb-6">
-                        <h3 className="text-lg font-bold text-gray-900">Productos Recientes</h3>
-                        <a href="/#/admin/products" className="text-sm text-blue-600 font-medium hover:underline">Ver todos</a>
-                    </div>
-                    <div className="space-y-1">
-                        {loading ? (
-                            Array(5).fill(0).map((_, i) => (
-                                <div key={i} className="flex items-center gap-4 p-4 animate-pulse">
-                                    <div className="w-12 h-12 bg-gray-100 rounded-lg"></div>
-                                    <div className="flex-1 space-y-2">
-                                        <div className="h-4 bg-gray-100 rounded w-3/4"></div>
-                                        <div className="h-3 bg-gray-100 rounded w-1/2"></div>
-                                    </div>
-                                </div>
-                            ))
-                        ) : recentProducts.length === 0 ? (
-                            <div className="text-center py-8 text-gray-500">
-                                <Package size={48} className="mx-auto mb-2 text-gray-300" />
-                                <p>No hay productos aún</p>
-                            </div>
-                        ) : (
-                            recentProducts.map((product) => (
-                                <div key={product.id_producto} className="flex items-center justify-between p-4 hover:bg-gray-50 rounded-xl transition-colors group cursor-pointer">
-                                    <div className="flex items-center gap-4">
-                                        <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center group-hover:shadow-sm transition-all overflow-hidden">
-                                            {product.imagen ? (
-                                                <img src={product.imagen} alt={product.nombre} className="w-full h-full object-cover" />
-                                            ) : (
-                                                <Package size={20} className="text-gray-400" />
-                                            )}
+                <div className="space-y-8">
+                    {/* Most Sold Products */}
+                    <div className="bg-white p-6 rounded-2xl shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-gray-100">
+                        <div className="flex items-center justify-between mb-6">
+                            <h3 className="text-lg font-bold text-gray-900">Productos Más Vendidos</h3>
+                        </div>
+                        <div className="space-y-1">
+                            {loading ? (
+                                Array(3).fill(0).map((_, i) => (
+                                    <div key={i} className="flex items-center gap-4 p-4 animate-pulse">
+                                        <div className="w-12 h-12 bg-gray-100 rounded-lg"></div>
+                                        <div className="flex-1 space-y-2">
+                                            <div className="h-4 bg-gray-100 rounded w-3/4"></div>
                                         </div>
-                                        <div>
-                                            <p className="text-sm font-semibold text-gray-900">{product.nombre}</p>
-                                            <div className="flex items-center gap-2 mt-1">
-                                                <span className="text-xs text-gray-500">{product.categoria || 'Sin categoría'}</span>
-                                                <span className="text-xs text-gray-400">•</span>
-                                                <span className={`text-xs font-medium ${product.stock < 5 ? 'text-orange-600' : 'text-gray-500'}`}>
-                                                    Stock: {product.stock}
-                                                </span>
+                                    </div>
+                                ))
+                            ) : mostSoldProducts.length === 0 ? (
+                                <div className="text-center py-8 text-gray-500">
+                                    <p>No hay datos de ventas</p>
+                                </div>
+                            ) : (
+                                mostSoldProducts.map((product) => (
+                                    <div key={product.id_producto} className="flex items-center justify-between p-4 hover:bg-gray-50 rounded-xl transition-colors">
+                                        <div className="flex items-center gap-4">
+                                            <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+                                                {product.imagen ? (
+                                                    <img src={product.imagen} alt={product.nombre} className="w-full h-full object-cover" />
+                                                ) : (
+                                                    <Package size={20} className="text-gray-400" />
+                                                )}
+                                            </div>
+                                            <div>
+                                                <p className="text-sm font-semibold text-gray-900">{product.nombre}</p>
+                                                <p className="text-xs text-gray-500">Ventas: {product.ventas || 0}</p>
                                             </div>
                                         </div>
+                                        <span className="text-sm font-bold text-gray-900">€{parseFloat(product.precio).toFixed(2)}</span>
                                     </div>
-                                    <div className="text-right">
-                                        <span className="block text-sm font-bold text-gray-900">€{parseFloat(product.precio).toFixed(2)}</span>
-                                        <span className={`inline-block text-xs px-2 py-0.5 rounded-full mt-1 ${product.activo ? 'bg-green-50 text-green-700' : 'bg-gray-100 text-gray-500'
-                                            }`}>
-                                            {product.activo ? 'Activo' : 'Inactivo'}
-                                        </span>
+                                ))
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Recent Products */}
+                    <div className="bg-white p-6 rounded-2xl shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-gray-100">
+                        <div className="flex items-center justify-between mb-6">
+                            <h3 className="text-lg font-bold text-gray-900">Productos Recientes</h3>
+                            <a href="/#/admin/products" className="text-sm text-blue-600 font-medium hover:underline">Ver todos</a>
+                        </div>
+                        <div className="space-y-1">
+                            {loading ? (
+                                Array(5).fill(0).map((_, i) => (
+                                    <div key={i} className="flex items-center gap-4 p-4 animate-pulse">
+                                        <div className="w-12 h-12 bg-gray-100 rounded-lg"></div>
+                                        <div className="flex-1 space-y-2">
+                                            <div className="h-4 bg-gray-100 rounded w-3/4"></div>
+                                            <div className="h-3 bg-gray-100 rounded w-1/2"></div>
+                                        </div>
                                     </div>
+                                ))
+                            ) : recentProducts.length === 0 ? (
+                                <div className="text-center py-8 text-gray-500">
+                                    <Package size={48} className="mx-auto mb-2 text-gray-300" />
+                                    <p>No hay productos aún</p>
                                 </div>
-                            ))
-                        )}
+                            ) : (
+                                recentProducts.map((product) => (
+                                    <div key={product.id_producto} className="flex items-center justify-between p-4 hover:bg-gray-50 rounded-xl transition-colors group cursor-pointer">
+                                        <div className="flex items-center gap-4">
+                                            <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center group-hover:shadow-sm transition-all overflow-hidden">
+                                                {product.imagen ? (
+                                                    <img src={product.imagen} alt={product.nombre} className="w-full h-full object-cover" />
+                                                ) : (
+                                                    <Package size={20} className="text-gray-400" />
+                                                )}
+                                            </div>
+                                            <div>
+                                                <p className="text-sm font-semibold text-gray-900">{product.nombre}</p>
+                                                <div className="flex items-center gap-2 mt-1">
+                                                    <span className="text-xs text-gray-500">{product.categoria || 'Sin categoría'}</span>
+                                                    <span className="text-xs text-gray-400">•</span>
+                                                    <span className={`text-xs font-medium ${product.stock < 5 ? 'text-orange-600' : 'text-gray-500'}`}>
+                                                        Stock: {product.stock}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="text-right">
+                                            <span className="block text-sm font-bold text-gray-900">€{parseFloat(product.precio).toFixed(2)}</span>
+                                            <span className={`inline-block text-xs px-2 py-0.5 rounded-full mt-1 ${product.activo ? 'bg-green-50 text-green-700' : 'bg-gray-100 text-gray-500'
+                                                }`}>
+                                                {product.activo ? 'Activo' : 'Inactivo'}
+                                            </span>
+                                        </div>
+                                    </div>
+                                ))
+                            )}
+                        </div>
                     </div>
                 </div>
 
