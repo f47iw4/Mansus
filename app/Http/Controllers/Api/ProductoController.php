@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Producto;
+use App\Http\Resources\ProductoResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -14,8 +15,9 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $productos = Producto::where('activo', true)->get();
-        return response()->json($productos);
+        // Pagination is better for performance and API standards
+        $productos = Producto::where('activo', true)->paginate(12);
+        return ProductoResource::collection($productos);
     }
 
     /**
@@ -30,7 +32,7 @@ class ProductoController extends Controller
             'material' => 'required|string',
             'precio' => 'required|numeric',
             'stock' => 'required|integer',
-            'imagen' => 'nullable|string', // Assuming URL or path
+            'imagen' => 'nullable|string',
         ]);
 
         $validatedData['activo'] = true;
@@ -39,7 +41,7 @@ class ProductoController extends Controller
 
         $producto = Producto::create($validatedData);
 
-        return response()->json($producto, 201);
+        return new ProductoResource($producto);
     }
 
     /**
@@ -53,7 +55,7 @@ class ProductoController extends Controller
             return response()->json(['message' => 'Producto no encontrado'], 404);
         }
 
-        return response()->json($producto);
+        return new ProductoResource($producto);
     }
 
     /**
@@ -80,7 +82,7 @@ class ProductoController extends Controller
 
         $producto->update($validatedData);
 
-        return response()->json($producto);
+        return new ProductoResource($producto);
     }
 
     /**
@@ -96,6 +98,6 @@ class ProductoController extends Controller
 
         $producto->delete();
 
-        return response()->json(['message' => 'Producto eliminado']);
+        return response()->json(null, 204);
     }
 }
