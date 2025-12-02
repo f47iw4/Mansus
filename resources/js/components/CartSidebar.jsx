@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { X, Minus, Plus, Trash2, ShoppingBag, ArrowRight } from 'lucide-react';
 import { useCart } from '../context/CartContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function CartSidebar() {
     const { cart, isCartOpen, setIsCartOpen, removeFromCart, updateQuantity, cartTotal } = useCart();
     const navigate = useNavigate();
+    const location = useLocation();
+
+    // Close cart when route changes
+    useEffect(() => {
+        setIsCartOpen(false);
+    }, [location.pathname]);
 
     const handleCheckout = () => {
         setIsCartOpen(false);

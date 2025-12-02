@@ -97,9 +97,12 @@ export default function Dashboard() {
                     >
                         Actualizar
                     </button>
-                    <button className="bg-gray-900 text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors shadow-lg shadow-gray-900/20">
-                        Descargar Reporte
-                    </button>
+                    <a
+                        href="/admin/login"
+                        className="bg-gray-900 text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors shadow-lg shadow-gray-900/20 inline-block"
+                    >
+                        🛠️ Gestionar Productos (CRUD)
+                    </a>
                 </div>
             </div>
 

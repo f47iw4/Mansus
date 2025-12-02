@@ -20,6 +20,7 @@ import AdminLayout from '../layouts/AdminLayout';
 import Dashboard from '../pages/admin/Dashboard';
 import Products from '../pages/admin/Products';
 import Orders from '../pages/admin/Orders';
+import AdminRoute from './AdminRoute';
 
 // Layout wrapper for public pages to include Header/Footer
 const PublicLayout = ({ children }) => (
@@ -48,11 +49,13 @@ export default function App() {
                         <Route path="/product/:id" element={<PublicLayout><ProductDetail /></PublicLayout>} />
                         <Route path="/checkout" element={<PublicLayout><Checkout /></PublicLayout>} />
 
-                        {/* Admin Routes */}
-                        <Route path="/admin" element={<AdminLayout />}>
-                            <Route index element={<Dashboard />} />
-                            <Route path="products" element={<Products />} />
-                            <Route path="orders" element={<Orders />} />
+                        {/* Admin Routes - Protected */}
+                        <Route element={<AdminRoute />}>
+                            <Route path="/admin" element={<AdminLayout />}>
+                                <Route index element={<Dashboard />} />
+                                <Route path="products" element={<Products />} />
+                                <Route path="orders" element={<Orders />} />
+                            </Route>
                         </Route>
 
                         {/* Fallback */}

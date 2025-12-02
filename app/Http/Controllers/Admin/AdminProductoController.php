@@ -45,7 +45,7 @@ public function index()
         $this->authorize('create', Producto::class);
         $data = $request->validated();
 
-        // Usar el sistema de archivos de Amine (más eficiente)
+        // sistema de archivos de varchar
         if ($request->hasFile('imagen')) {
             $imagen = $request->file('imagen');
             $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
@@ -82,7 +82,7 @@ public function index()
         $this->authorize('update', $producto);
         $data = $request->validated();
 
-        // Usar el sistema de archivos de Amine
+        
         if ($request->hasFile('imagen')) {
             $imagen = $request->file('imagen');
             $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
@@ -123,7 +123,7 @@ public function index()
     }
 
     /**
-     * API: Store a newly created product and return JSON
+     * API: Guarda un producto recién creado y devuelve json
      */
     public function apiStore(StoreProductoRequest $request)
     {
@@ -146,9 +146,7 @@ public function index()
         ], 201);
     }
 
-    /**
-     * API: Update the specified product and return JSON
-     */
+   
     public function apiUpdate(UpdateProductoRequest $request, Producto $producto)
     {
         $data = $request->validated();
@@ -171,7 +169,7 @@ public function index()
     }
 
     /**
-     * API: Delete the specified product and return JSON
+     * API: Borra un producto y devuelve json
      */
     public function apiDestroy(Producto $producto)
     {
@@ -191,7 +189,7 @@ public function index()
     }
     
     
-    /* Si falla el try-catch, descomentar este (y seguir probando)
+    /* Este fue un método inicial anterior al trycatch-Si falla el try-catch, descomentar este (y seguir probando)
     public function destroy(Producto $producto)
     {
         $producto->delete();

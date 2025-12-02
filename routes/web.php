@@ -10,6 +10,15 @@ Route::get('/', function () {
     return view('app');
 });
 
+Route::get('/login', function () {
+    return view('app');
+})->name('login');
+
+// Traditional Admin Login (for Blade CRUD access)
+Route::get('/admin/login', [App\Http\Controllers\Admin\AdminLoginController::class, 'showLoginForm'])->name('admin.login');
+Route::post('/admin/login', [App\Http\Controllers\Admin\AdminLoginController::class, 'login'])->name('admin.login.post');
+Route::post('/admin/logout-web', [App\Http\Controllers\Admin\AdminLoginController::class, 'logout'])->name('admin.logout.web');
+
 // Rutas públicas para el catálogo de productos (Backend Rendered - si se usan)
 Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index');
 Route::get('/productos/{producto}', [ProductoController::class, 'show'])->name('productos.show');
@@ -17,6 +26,7 @@ Route::get('/productos/{producto}', [ProductoController::class, 'show'])->name('
 // ====================== Rutas ADMIN ======================
 Route::prefix('admin')
     ->as('admin.')
+    ->middleware(['auth', 'is_admin']) // Protect all admin routes
     ->group(function () {
         // Dashboard
         Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
@@ -47,4 +57,4 @@ Route::prefix('admin')
 // Cualquier otra ruta que no sea API o Admin será manejada por React
 Route::get('/{any}', function () {
     return view('app');
-})->where('any', '.*');
+})->where('any', '^(?!admin).*$');

@@ -1,0 +1,102 @@
+import React, { createContext, useState, useContext, useEffect } from 'react';
+import axios from 'axios';
+
+const AuthContext = createContext();
+
+export const AuthProvider = ({ children }) => {
+    const [user, setUser] = useState(null);
+    const [token, setToken] = useState(localStorage.getItem('token'));
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+
+    // Configurar axios con el token
+    if (token) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    }
+
+    useEffect(() => {
+        const checkAuth = async () => {
+            if (token) {
+                try {
+                    const response = await axios.get('/api/user');
+                    setUser(response.data);
+                    setIsAuthenticated(true);
+                } catch (error) {
+                    console.error('Error verificando sesión:', error);
+                    logout();
+                }
+            }
+            setIsLoading(false);
+        };
+
+        checkAuth();
+    }, [token]);
+
+    const login = async (email, password) => {
+        try {
+            // Inicializar CSRF cookie para autenticación por sesión
+            await axios.get('/sanctum/csrf-cookie');
+
+            const response = await axios.post('/api/login', { email, password });
+            const { token, user } = response.data;
+
+            localStorage.setItem('token', token);
+            setToken(token);
+            setUser(user);
+            setIsAuthenticated(true);
+
+            return { success: true, role: user.role };
+        } catch (error) {
+            return {
+                success: false,
+                message: error.response?.data?.message || 'Error al iniciar sesión'
+            };
+        }
+    };
+
+    const register = async (name, email, password) => {
+        try {
+            // Inicializar CSRF cookies para aut basada en sesiones
+            await axios.get('/sanctum/csrf-cookie');
+
+            const response = await axios.post('/api/register', { name, email, password });
+            const { token, user } = response.data;
+
+            localStorage.setItem('token', token);
+            setToken(token);
+            setUser(user);
+            setIsAuthenticated(true);
+
+            return { success: true };
+        } catch (error) {
+            return {
+                success: false,
+                message: error.response?.data?.message || 'Error al registrarse'
+            };
+        }
+    };
+
+    const logout = async () => {
+        try {
+            if (token) {
+                await axios.post('/api/logout');
+            }
+        } catch (error) {
+            console.error('Error al cerrar sesión en servidor:', error);
+        } finally {
+            localStorage.removeItem('token');
+            setToken(null);
+            setUser(null);
+            setIsAuthenticated(false);
+            delete axios.defaults.headers.common['Authorization'];
+        }
+    };
+
+    return (
+        <AuthContext.Provider value={{ user, token, isAuthenticated, isLoading, login, register, logout }}>
+            {children}
+        </AuthContext.Provider>
+    );
+};
+
+export const useAuth = () => useContext(AuthContext);

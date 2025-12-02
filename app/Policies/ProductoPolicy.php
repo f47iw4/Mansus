@@ -11,6 +11,18 @@ class ProductoPolicy
     use HandlesAuthorization;
 
     /**
+     * Perform pre-authorization checks.
+     */
+    public function before(User $user, string $ability): bool|null
+    {
+        if ($user->role === 'admin') {
+            return true;
+        }
+    
+        return null;
+    }
+
+    /**
      * Determine whether the user can view any products.
      */
     public function viewAny(User $user): bool
@@ -32,8 +44,7 @@ class ProductoPolicy
      */
     public function create(User $user): bool
     {
-        // Only admins can create – adjust condition
-        return $user->isAdmin ?? false;
+        return $user->role === 'admin';
     }
 
     /**
@@ -41,7 +52,7 @@ class ProductoPolicy
      */
     public function update(User $user, Producto $producto): bool
     {
-        return $user->isAdmin ?? false;
+        return $user->role === 'admin';
     }
 
     /**
@@ -49,7 +60,7 @@ class ProductoPolicy
      */
     public function delete(User $user, Producto $producto): bool
     {
-        return $user->isAdmin ?? false;
+        return $user->role === 'admin';
     }
 
     /**
@@ -57,6 +68,6 @@ class ProductoPolicy
      */
     public function toggle(User $user, Producto $producto): bool
     {
-        return $user->isAdmin ?? false;
+        return $user->role === 'admin';
     }
 }

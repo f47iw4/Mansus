@@ -3,31 +3,40 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { User, Lock, ArrowRight } from 'lucide-react';
 
+import { useAuth } from '../context/AuthContext';
+
 export default function Login() {
     const [isLogin, setIsLogin] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [name, setName] = useState(''); // Add name state for registration
+    const [error, setError] = useState(''); // Add error state
 
     const navigate = useNavigate();
+    const { login, register } = useAuth();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setError('');
 
-        // Mock authentication logic
         if (isLogin) {
-            if (email === 'admin@mansus.com' && password === 'admin') {
-                // Admin login success
-                console.log('Admin login successful');
-                navigate('/admin');
+            const result = await login(email, password);
+            if (result.success) {
+                if (result.role === 'admin') {
+                    navigate('/admin');
+                } else {
+                    navigate('/');
+                }
             } else {
-                // Regular user login (mock)
-                console.log('User login successful');
-                navigate('/');
+                setError(result.message);
             }
         } else {
-            // Registration (mock)
-            console.log('Registration successful');
-            navigate('/');
+            const result = await register(name, email, password);
+            if (result.success) {
+                navigate('/');
+            } else {
+                setError(result.message);
+            }
         }
     };
 
@@ -48,7 +57,30 @@ export default function Login() {
                         </p>
                     </div>
 
+                    {error && (
+                        <div className="mb-4 p-3 bg-red-100 text-red-700 rounded text-sm text-center">
+                            {error}
+                        </div>
+                    )}
+
                     <form onSubmit={handleSubmit} className="space-y-6">
+                        {!isLogin && (
+                            <div className="space-y-2">
+                                <label className="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400 font-semibold">Nombre y Apellido</label>
+                                <div className="relative">
+                                    <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                                    <input
+                                        type="text"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                        className="w-full pl-12 pr-4 py-3 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-600 focus:border-gray-900 dark:focus:border-white focus:ring-0 outline-none transition-colors"
+                                        placeholder="Nombre y Apellido"
+                                        required
+                                    />
+                                </div>
+                            </div>
+                        )}
+
                         <div className="space-y-2">
                             <label className="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400 font-semibold">Email</label>
                             <div className="relative">

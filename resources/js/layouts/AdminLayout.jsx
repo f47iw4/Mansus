@@ -19,9 +19,9 @@ export default function AdminLayout() {
     const location = useLocation();
 
     const navItems = [
-        { name: 'Dashboard', path: '/admin', icon: LayoutDashboard },
-        { name: 'Productos', path: '/admin/products', icon: Package },
-        { name: 'Pedidos', path: '/admin/orders', icon: ShoppingCart },
+        { name: 'Dashboard', path: '/admin', icon: LayoutDashboard, isReact: true },
+        { name: 'Productos', path: '/admin/productos', icon: Package, isReact: false }, // Blade CRUD
+        { name: 'Pedidos', path: '/admin/orders', icon: ShoppingCart, isReact: true },
     ];
 
     return (
@@ -62,34 +62,47 @@ export default function AdminLayout() {
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ delay: index * 0.1 }}
                             >
-                                <Link
-                                    to={item.path}
-                                    className={`flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all duration-300 group relative overflow-hidden ${isActive
+                                {item.isReact ? (
+                                    <Link
+                                        to={item.path}
+                                        className={`flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all duration-300 group relative overflow-hidden ${isActive
                                             ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/30'
                                             : 'text-gray-400 hover:text-white hover:bg-white/5'
-                                        }`}
-                                >
-                                    {isActive && (
-                                        <motion.div
-                                            layoutId="activeTab"
-                                            className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl"
-                                            transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                                            }`}
+                                    >
+                                        {isActive && (
+                                            <motion.div
+                                                layoutId="activeTab"
+                                                className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl"
+                                                transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                                            />
+                                        )}
+                                        <item.icon
+                                            size={22}
+                                            strokeWidth={isActive ? 2.5 : 2}
+                                            className="relative z-10"
                                         />
-                                    )}
-                                    <item.icon
-                                        size={22}
-                                        strokeWidth={isActive ? 2.5 : 2}
-                                        className="relative z-10"
-                                    />
-                                    {isSidebarOpen && (
-                                        <span className={`font-medium relative z-10 ${isActive ? 'font-semibold' : ''}`}>
-                                            {item.name}
-                                        </span>
-                                    )}
-                                    {!isActive && (
+                                        {isSidebarOpen && (
+                                            <span className={`font-medium relative z-10 ${isActive ? 'font-semibold' : ''}`}>
+                                                {item.name}
+                                            </span>
+                                        )}
+                                        {!isActive && (
+                                            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl" />
+                                        )}
+                                    </Link>
+                                ) : (
+                                    <a
+                                        href={item.path}
+                                        className="flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all duration-300 group relative overflow-hidden text-gray-400 hover:text-white hover:bg-white/5"
+                                    >
+                                        <item.icon size={22} strokeWidth={2} className="relative z-10" />
+                                        {isSidebarOpen && (
+                                            <span className="font-medium relative z-10">{item.name}</span>
+                                        )}
                                         <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl" />
-                                    )}
-                                </Link>
+                                    </a>
+                                )}
                             </motion.div>
                         );
                     })}
@@ -206,8 +219,8 @@ export default function AdminLayout() {
                                             to={item.path}
                                             onClick={() => setIsSidebarOpen(false)}
                                             className={`flex items-center gap-4 px-4 py-3 rounded-xl transition-all ${isActive
-                                                    ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white'
-                                                    : 'text-gray-400 hover:text-white hover:bg-white/5'
+                                                ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white'
+                                                : 'text-gray-400 hover:text-white hover:bg-white/5'
                                                 }`}
                                         >
                                             <item.icon size={20} />
