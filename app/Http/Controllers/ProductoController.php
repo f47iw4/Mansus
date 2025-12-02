@@ -36,4 +36,14 @@ class ProductoController extends Controller
     
         return view('productos.show', compact('producto'));
     }
+
+    /**
+     * API endpoint - Return active products as JSON for the frontend
+     */
+    public function apiIndex()
+    {
+        return Producto::where('activo', true)
+                      ->orderBy('id_producto', 'desc')
+                      ->paginate(25);
+    }
 }
