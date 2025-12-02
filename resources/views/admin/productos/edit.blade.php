@@ -1,98 +1,37 @@
 @extends('layouts.app')
-<div class="mb-3">
-    <form action="{{ route('admin.productos.toggle', $producto) }}" method="POST" style="display:inline">
-        @csrf
-        @method('PATCH')
-        @if($producto->activo)
-            <button type="submit" class="btn btn-warning">
-                <i class="bi bi-eye-slash"></i> Desactivar Producto
-            </button>
-        @else
-            <button type="submit" class="btn btn-success">
-                <i class="bi bi-eye"></i> Activar Producto
-            </button>
-        @endif
-    </form>
-</div>
 
-<hr class="my-4">
-
-<button type="submit" class="btn btn-primary">Actualizar</button>
-<a href="{{ route('admin.productos.index') }}" class="btn btn-secondary">Cancelar</a>
 @section('content')
-<h1>Editar Producto</h1>
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+        <div class="mb-8 text-center">
+            <h1 class="text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+                Editar Producto
+            </h1>
+            <p class="text-gray-600 mt-2">Actualiza los detalles de {{ $producto->nombre }}</p>
+        </div>
 
-<form action="{{ route('admin.productos.update', $producto) }}" method="POST" enctype="multipart/form-data">
-    @csrf
-    @method('PUT')
-
-    <div class="mb-3">
-        <label for="nombre" class="form-label">Nombre *</label>
-        <input type="text" class="form-control @error('nombre') is-invalid @enderror" id="nombre" name="nombre" value="{{ old('nombre', $producto->nombre) }}" required>
-        @error('nombre')
-            <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-    </div>
-
-    <div class="mb-3">
-        <label for="descripcion" class="form-label">Descripción</label>
-        <textarea class="form-control @error('descripcion') is-invalid @enderror" id="descripcion" name="descripcion" rows="3">{{ old('descripcion', $producto->descripcion) }}</textarea>
-        @error('descripcion')
-            <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-    </div>
-
-    <div class="mb-3">
-        <label for="imagen" class="form-label">Imagen</label>
-        <input type="file" class="form-control @error('imagen') is-invalid @enderror" id="imagen" name="imagen" accept="image/*">
-        @if($producto->imagen)
-            <div class="mt-2">
-                <img src="{{ $producto->imagen }}" alt="Imagen actual" style="max-height: 100px;" class="rounded">
+        <div class="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
+            <div class="p-8">
+                <form action="{{ route('admin.productos.update', $producto) }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                    
+                    @include('admin.productos.form')
+                    
+                    <div class="mt-8 flex items-center justify-end gap-4 border-t border-gray-100 pt-6">
+                        <a href="{{ route('admin.productos.index') }}" class="px-6 py-3 text-gray-700 font-medium hover:bg-gray-50 rounded-xl transition-colors">
+                            Cancelar
+                        </a>
+                        <button type="submit" class="bg-gradient-to-r from-gray-900 to-gray-800 text-white px-8 py-3 rounded-xl font-semibold hover:from-gray-800 hover:to-gray-700 transition-all duration-300 shadow-lg shadow-gray-900/30 hover:shadow-xl hover:shadow-gray-900/40 flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                            </svg>
+                            Actualizar Producto
+                        </button>
+                    </div>
+                </form>
             </div>
-        @endif
-        @error('imagen')
-            <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
+        </div>
     </div>
-
-    <div class="mb-3">
-        <label for="categoria" class="form-label">Categoría</label>
-        <input type="text" class="form-control @error('categoria') is-invalid @enderror" id="categoria" name="categoria" value="{{ old('categoria', $producto->categoria) }}">
-        @error('categoria')
-            <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-    </div>
-
-    <div class="mb-3">
-        <label for="material" class="form-label">Material</label>
-        <input type="text" class="form-control @error('material') is-invalid @enderror" id="material" name="material" value="{{ old('material', $producto->material) }}">
-        @error('material')
-            <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-    </div>
-
-    <div class="mb-3">
-        <label for="precio" class="form-label">Precio *</label>
-        <input type="number" step="0.01" class="form-control @error('precio') is-invalid @enderror" id="precio" name="precio" value="{{ old('precio', $producto->precio) }}" required>
-        @error('precio')
-            <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-    </div>
-
-    <div class="mb-3">
-        <label for="stock" class="form-label">Stock *</label>
-        <input type="number" class="form-control @error('stock') is-invalid @enderror" id="stock" name="stock" value="{{ old('stock', $producto->stock) }}" required>
-        @error('stock')
-            <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-    </div>
-
-    <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="activo" name="activo" value="1"{{ old('activo', $producto->activo) ? 'checked' : '' }}>
-        <label class="form-check-label" for="activo">Activo</label>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Actualizar</button>
-    <a href="{{ route('admin.productos.index') }}" class="btn btn-secondary">Cancelar</a>
-</form>
+</div>
 @endsection
