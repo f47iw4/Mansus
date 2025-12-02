@@ -108,19 +108,17 @@ export default function ProductGrid({ category = 'Todo', searchQuery = '', produ
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                                         {/* Quick Add Button - Desktop (on hover) */}
-                                        <motion.button
+                                        <button
                                             onClick={(e) => {
                                                 e.preventDefault();
                                                 e.stopPropagation();
                                                 addToCart(product);
                                             }}
-                                            initial={{ y: 20, opacity: 0 }}
-                                            whileHover={{ scale: 1.05 }}
-                                            className="hidden md:flex absolute bottom-4 left-1/2 -translate-x-1/2 bg-white text-gray-900 px-6 py-3 rounded-full shadow-2xl translate-y-12 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 hover:bg-gray-900 hover:text-white items-center gap-2 font-medium text-sm uppercase tracking-wider z-10"
+                                            className="hidden md:flex absolute bottom-4 left-1/2 -translate-x-1/2 bg-white text-gray-900 px-6 py-3 rounded-full shadow-2xl opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-gray-900 hover:text-white items-center gap-2 font-medium text-sm uppercase tracking-wider z-20 hover:scale-105"
                                         >
                                             <ShoppingBag size={18} />
                                             Añadir al Carrito
-                                        </motion.button>
+                                        </button>
 
                                         {/* Quick Add Icon - Mobile */}
                                         <button
@@ -148,18 +146,6 @@ export default function ProductGrid({ category = 'Todo', searchQuery = '', produ
                                             <span className="text-xl font-bold text-gray-900 dark:text-white">
                                                 €{product.price.toFixed(2)}
                                             </span>
-                                            {/* Mobile Add Button */}
-                                            <button
-                                                onClick={(e) => {
-                                                    e.preventDefault();
-                                                    e.stopPropagation();
-                                                    addToCart(product);
-                                                }}
-                                                className="md:hidden bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-full hover:from-blue-600 hover:to-purple-700 transition-all flex items-center gap-2 text-xs font-bold"
-                                            >
-                                                <ShoppingBag size={14} />
-                                                Añadir
-                                            </button>
                                         </div>
                                     </div>
                                 </div>
