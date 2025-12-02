@@ -3,7 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '5f716dd4fadcbf1dfdb5b04c483f2120a79a9ace',
+        'reference' => '13de21bdd4fe86a191e4a6be5a2904a5f5201e47',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -84,6 +84,15 @@
             'install_path' => __DIR__ . '/../egulias/email-validator',
             'aliases' => array(),
             'dev_requirement' => false,
+        ),
+        'erusev/parsedown' => array(
+            'pretty_version' => '1.7.4',
+            'version' => '1.7.4.0',
+            'reference' => 'cb17b6477dfff935958ba01325f2e8a2bfa6dab3',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../erusev/parsedown',
+            'aliases' => array(),
+            'dev_requirement' => true,
         ),
         'fakerphp/faker' => array(
             'pretty_version' => 'v1.24.1',
@@ -364,6 +373,15 @@
                 0 => 'v10.49.1',
             ),
         ),
+        'knuckleswtf/scribe' => array(
+            'pretty_version' => '5.6.0',
+            'version' => '5.6.0.0',
+            'reference' => '0b7c6d90d239b8829d3449472516c5490cc1f154',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../knuckleswtf/scribe',
+            'aliases' => array(),
+            'dev_requirement' => true,
+        ),
         'kodova/hamcrest-php' => array(
             'dev_requirement' => true,
             'replaced' => array(
@@ -382,7 +400,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '5f716dd4fadcbf1dfdb5b04c483f2120a79a9ace',
+            'reference' => '13de21bdd4fe86a191e4a6be5a2904a5f5201e47',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -504,6 +522,21 @@
             'install_path' => __DIR__ . '/../monolog/monolog',
             'aliases' => array(),
             'dev_requirement' => false,
+        ),
+        'mpociot/laravel-apidoc-generator' => array(
+            'dev_requirement' => true,
+            'replaced' => array(
+                0 => '*',
+            ),
+        ),
+        'mpociot/reflection-docblock' => array(
+            'pretty_version' => '1.0.1',
+            'version' => '1.0.1.0',
+            'reference' => 'c8b2e2b1f5cebbb06e2b5ccbf2958f2198867587',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../mpociot/reflection-docblock',
+            'aliases' => array(),
+            'dev_requirement' => true,
         ),
         'mtdowling/cron-expression' => array(
             'dev_requirement' => false,
@@ -953,6 +986,24 @@
             'aliases' => array(),
             'dev_requirement' => true,
         ),
+        'shalvah/clara' => array(
+            'pretty_version' => '3.3.0',
+            'version' => '3.3.0.0',
+            'reference' => '6b30f389d71bfdd3f6e09f9b9537205ac7e118de',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../shalvah/clara',
+            'aliases' => array(),
+            'dev_requirement' => true,
+        ),
+        'shalvah/upgrader' => array(
+            'pretty_version' => '0.6.0',
+            'version' => '0.6.0.0',
+            'reference' => 'd95ed17fe9f5e1ee7d47ad835595f1af080a867f',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../shalvah/upgrader',
+            'aliases' => array(),
+            'dev_requirement' => true,
+        ),
         'spatie/backtrace' => array(
             'pretty_version' => '1.8.1',
             'version' => '1.8.1.0',
@@ -1252,6 +1303,15 @@
             'install_path' => __DIR__ . '/../symfony/var-dumper',
             'aliases' => array(),
             'dev_requirement' => false,
+        ),
+        'symfony/var-exporter' => array(
+            'pretty_version' => 'v6.4.26',
+            'version' => '6.4.26.0',
+            'reference' => '466fcac5fa2e871f83d31173f80e9c2684743bfc',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/var-exporter',
+            'aliases' => array(),
+            'dev_requirement' => true,
         ),
         'symfony/yaml' => array(
             'pretty_version' => 'v6.4.26',

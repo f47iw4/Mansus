@@ -51,8 +51,8 @@ export default function Dashboard() {
     const fetchDashboardData = async () => {
         setLoading(true);
         try {
-            // Corrected API endpoint
-            const response = await axios.get('/api/admin/productos');
+            // Corrected API endpoint to match web.php route
+            const response = await axios.get('/admin/api/v1/productos');
             const products = response.data.data || response.data;
 
             // Calculate stats
@@ -99,9 +99,13 @@ export default function Dashboard() {
                     </button>
                     <a
                         href="/admin/login"
-                        className="bg-gray-900 text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors shadow-lg shadow-gray-900/20 inline-block"
+                        className="bg-gradient-to-r from-gray-900 to-gray-800 text-white px-6 py-2.5 rounded-lg text-sm font-semibold hover:from-gray-800 hover:to-gray-700 transition-all duration-300 shadow-lg shadow-gray-900/30 hover:shadow-xl hover:shadow-gray-900/40 inline-flex items-center gap-2 group"
                     >
-                        🛠️ Gestionar Productos (CRUD)
+                        <svg className="w-4 h-4 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        Gestionar Productos
                     </a>
                 </div>
             </div>
