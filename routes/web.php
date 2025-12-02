@@ -27,6 +27,20 @@ Route::prefix('admin')
         
         // API interna para el dashboard (versionada v1)
         Route::get('api/v1/productos', [AdminProductoController::class, 'apiIndex'])->name('api.productos');
+
+        // Clientes (placeholder)
+        Route::get('clientes', function() {
+            return 'Gestión de clientes - próximamente';
+        })->name('clientes.index');
+        
+        Route::get('clientes/create', function() {
+            return 'Crear cliente - próximamente';
+        })->name('clientes.create');
+        
+        // Estado del servidor (placeholder)
+        Route::get('servidor', function() {
+            return 'Estado del servidor - próximamente';
+        })->name('servidor');
     });
 
 // ====================== SPA Catch-all Route ======================

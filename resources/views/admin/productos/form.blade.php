@@ -58,10 +58,4 @@
     </select>
 </div>
 
-<div class="mb-2">
-    <label>Imagen</label>
-    <input type="file" name="imagen" class="form-control">
-    @if(isset($producto) && $producto->imagen)
-        <small>Imagen actual: {{ $producto->imagen }}</small>
-    @endif
-</div>
+
