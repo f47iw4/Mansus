@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { ShoppingBag } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -97,8 +98,8 @@ export default function ProductGrid({ category = 'Todo', searchQuery = '', produ
                             exit={{ opacity: 0, scale: 0.9 }}
                             transition={{ duration: 0.3 }}
                         >
-                            <BackgroundGradient className="rounded-2xl bg-white dark:bg-zinc-900 overflow-hidden">
-                                <div className="group relative">
+                            <BackgroundGradient className="rounded-2xl bg-white dark:bg-zinc-900 overflow-hidden h-full">
+                                <Link to={`/product/${product.id}`} className="block h-full group relative">
                                     <div className="aspect-[3/4] overflow-hidden bg-gray-100 relative">
                                         <img
                                             src={product.image}
@@ -135,7 +136,7 @@ export default function ProductGrid({ category = 'Todo', searchQuery = '', produ
                                     <div className="p-4 space-y-3">
                                         <div className="flex justify-between items-start gap-2">
                                             <div className="flex-1">
-                                                <h3 className="text-sm font-semibold text-gray-900 dark:text-neutral-200 line-clamp-2">
+                                                <h3 className="text-sm font-semibold text-gray-900 dark:text-neutral-200 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                                                     {product.name}
                                                 </h3>
                                                 <p className="mt-1 text-xs text-gray-500 dark:text-neutral-400 uppercase tracking-wide">{product.category}</p>
@@ -148,7 +149,7 @@ export default function ProductGrid({ category = 'Todo', searchQuery = '', produ
                                             </span>
                                         </div>
                                     </div>
-                                </div>
+                                </Link>
                             </BackgroundGradient>
                         </motion.div>
                     ))}

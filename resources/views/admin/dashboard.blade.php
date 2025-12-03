@@ -99,8 +99,9 @@
     </div>
 
     <div class="row mt-4">
-        <div class="col-12">
-            <div class="card shadow-sm">
+        <!-- Productos Más Vendidos -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow-sm h-100">
                 <div class="card-header bg-white">
                     <h5 class="mb-0"><i class="bi bi-graph-up text-primary"></i> Productos Más Vendidos</h5>
                 </div>

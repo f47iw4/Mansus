@@ -29,6 +29,9 @@ class AdminDashboardController extends Controller
         // Productos más vendidos
         $productosMasVendidos = Producto::orderBy('ventas', 'desc')->take(5)->get();
 
+        // Productos recientes
+        $productosRecientes = Producto::orderBy('id_producto', 'desc')->take(5)->get();
+
         return view('admin.dashboard', compact(
             'totalProductos',
             'productosActivos',

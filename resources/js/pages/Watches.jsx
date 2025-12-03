@@ -13,7 +13,7 @@ export default function Watches() {
             try {
                 const response = await axios.get('/api/productos');
                 // Filter for watches and map to frontend format
-                const allProducts = response.data;
+                const allProducts = response.data.data || response.data;
                 const watchProducts = allProducts
                     .filter(p => p.categoria === 'Relojes')
                     .map(p => ({

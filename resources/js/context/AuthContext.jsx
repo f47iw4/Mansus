@@ -34,8 +34,8 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         try {
-            // Inicializar CSRF cookie para autenticación por sesión
-            await axios.get('/sanctum/csrf-cookie');
+            // CSRF cookie call removed for token-based auth
+
 
             const response = await axios.post('/api/login', { email, password });
             const { token, user } = response.data;
@@ -56,8 +56,7 @@ export const AuthProvider = ({ children }) => {
 
     const register = async (name, email, password) => {
         try {
-            // Inicializar CSRF cookies para aut basada en sesiones
-            await axios.get('/sanctum/csrf-cookie');
+            // CSRF cookie call removed for token-based auth
 
             const response = await axios.post('/api/register', { name, email, password });
             const { token, user } = response.data;
