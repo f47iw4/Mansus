@@ -32,7 +32,11 @@ Route::get('/productos', [ProductoController::class, 'index']);
 Route::get('/productos/{id}', [ProductoController::class, 'show']);
 
 // API para el panel de administrador
-Route::prefix('admin')->group(function () {
+Route::middleware(['auth:sanctum', 'is_admin'])->prefix('admin')->group(function () {
+    // Dashboard Data
+    Route::get('/dashboard-products', [App\Http\Controllers\Admin\AdminProductoController::class, 'apiIndex']);
+    
+    // Legacy routes (si se usan)
     Route::get('/productos', [ProductoController::class, 'index']);
     Route::post('/productos', [ProductoController::class, 'store']);
     Route::put('/productos/{id}', [ProductoController::class, 'update']);

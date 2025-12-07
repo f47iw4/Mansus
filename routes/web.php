@@ -28,15 +28,16 @@ Route::prefix('admin')
     ->as('admin.')
     ->middleware(['auth', 'is_admin']) // Protect all admin routes
     ->group(function () {
-        // Dashboard
+        // Dashboard (Accesible por ambos roles)
         Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
         
-        // Productos
-        Route::patch('productos/{producto}/toggle', [AdminProductoController::class, 'toggle'])->name('productos.toggle');
-        Route::resource('productos', AdminProductoController::class);
-        
-        // API interna para el dashboard (versionada v1)
-        Route::get('api/v1/productos', [AdminProductoController::class, 'apiIndex'])->name('api.productos');
+
+
+        // Productos CRUD (SOLO Super Admin)
+        Route::middleware(['super_admin'])->group(function () {
+            Route::patch('productos/{producto}/toggle', [AdminProductoController::class, 'toggle'])->name('productos.toggle');
+            Route::resource('productos', AdminProductoController::class);
+        });
 
         // Clientes (placeholder)
         Route::get('clientes', function() {

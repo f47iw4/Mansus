@@ -25,9 +25,17 @@ class UpdateProductoRequest extends FormRequest
             'descripcion' => 'nullable|string',
             'categoria' => 'nullable|string',
             'material' => 'nullable|string',
-            'precio' => 'required|numeric',
-            'stock' => 'required|integer',
+            'precio' => 'required|numeric|gt:0',
+            'stock' => 'required|integer|gt:0',
             'activo' => 'boolean',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'precio.gt' => 'El precio debe ser mayor que 0.',
+            'stock.gt' => 'El stock debe ser mayor que 0.',
         ];
     }
 }

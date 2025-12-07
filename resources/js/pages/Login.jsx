@@ -21,18 +21,14 @@ export default function Login() {
 
         if (isLogin) {
             const result = await login(email, password);
-            console.log('Login result:', result); // DEBUG
 
             if (result.success) {
-                console.log('User email:', result.user?.email); // DEBUG
-                console.log('Is admin?', result.user?.email === 'admin@mansus.com'); // DEBUG
-
-                // Si el usuario es admin, redirigir al panel de administración
+                // Redirigir según el tipo de usuario
                 if (result.user && result.user.email === 'admin@mansus.com') {
-                    console.log('Redirecting to /admin'); // DEBUG
-                    navigate('/admin');
+                    window.location.href = '/admin/productos'; // Panel Administrador (Blade)
+                } else if (result.user && result.user.email === 'supervisor@mansus.com') {
+                    navigate('/admin'); // Panel Supervisor (React)
                 } else {
-                    console.log('Redirecting to /'); // DEBUG
                     // Usuarios normales van a la landing page
                     navigate('/');
                 }

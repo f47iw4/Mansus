@@ -51,8 +51,8 @@ export default function Dashboard() {
     const fetchDashboardData = async () => {
         setLoading(true);
         try {
-            // Corrected API endpoint to match web.php route
-            const response = await axios.get('/admin/api/v1/productos');
+            // Corrected API endpoint to match api.php route
+            const response = await axios.get('/api/admin/dashboard-products');
             const products = response.data.data || response.data;
 
             // Calculate stats

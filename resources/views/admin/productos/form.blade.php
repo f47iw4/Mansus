@@ -119,3 +119,36 @@
     </div>
     <span class="text-xs font-medium px-2.5 py-1 rounded-full bg-green-100 text-green-700">Visible</span>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const precioInput = document.querySelector('input[name="precio"]');
+        const stockInput = document.querySelector('input[name="stock"]');
+        
+        // Find the form. Since this view is included inside the form, we can find it relative to an input.
+        const form = precioInput.closest('form');
+
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                const precio = parseFloat(precioInput.value);
+                const stock = parseInt(stockInput.value);
+
+                // Validación de Precio
+                if (precio <= 0) {
+                    e.preventDefault();
+                    alert('El precio debe ser mayor que 0');
+                    precioInput.focus();
+                    return false;
+                }
+
+                // Validación de Stock
+                if (stock <= 0) {
+                    e.preventDefault();
+                    alert('Si quieres poner el stock a 0, da de alta el producto con stock suficiente y después desactívalo en el panel.');
+                    stockInput.focus();
+                    return false;
+                }
+            });
+        }
+    });
+</script>

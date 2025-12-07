@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class IsAdmin
+class CheckSuperAdmin
 {
     /**
      * Handle an incoming request.
@@ -15,9 +15,11 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Verificar que el usuario esté autenticado y tenga rol de admin
-        if (!auth()->check() || auth()->user()->role !== 'admin') {
-            abort(403, 'Unauthorized action.');
+        if (!auth()->check() || auth()->user()->email !== 'admin@mansus.com') {
+            if ($request->expectsJson()) {
+                 return response()->json(['message' => 'Solo el administrador principal puede realizar esta acción.'], 403);
+            }
+            abort(403, 'Solo el administrador principal puede acceder a esta sección.');
         }
 
         return $next($request);

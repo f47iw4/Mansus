@@ -10,7 +10,8 @@ import {
     Bell,
     Search,
     User,
-    Sparkles
+    Sparkles,
+    Settings
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -23,6 +24,18 @@ export default function AdminLayout() {
         { name: 'Productos', path: '/admin/productos', icon: Package, isReact: false }, // Blade CRUD
         { name: 'Pedidos', path: '/admin/orders', icon: ShoppingCart, isReact: true },
     ];
+
+    const handleAdminPanelClick = (e) => {
+        e.preventDefault();
+        const confirmed = window.confirm(
+            '⚠️ Autenticación Requerida\n\n' +
+            'Necesitas iniciar sesión como administrador principal (admin@mansus.com) para acceder al Panel Administrador.\n\n' +
+            '¿Deseas continuar?'
+        );
+        if (confirmed) {
+            window.location.href = '/admin/login';
+        }
+    };
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 flex font-sans text-gray-900">
@@ -106,6 +119,25 @@ export default function AdminLayout() {
                             </motion.div>
                         );
                     })}
+
+                    {/* Panel Admin Link */}
+                    <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.3 }}
+                    >
+                        <a
+                            href="/admin/login"
+                            onClick={handleAdminPanelClick}
+                            className="flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all duration-300 group relative overflow-hidden text-gray-400 hover:text-white hover:bg-white/5"
+                        >
+                            <Settings size={22} strokeWidth={2} className="relative z-10" />
+                            {isSidebarOpen && (
+                                <span className="font-medium relative z-10">Panel Administrador</span>
+                            )}
+                            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl" />
+                        </a>
+                    </motion.div>
                 </nav>
 
                 {/* Logout Button */}
@@ -228,6 +260,18 @@ export default function AdminLayout() {
                                         </Link>
                                     );
                                 })}
+                                {/* Panel Admin Link (Mobile) */}
+                                <a
+                                    href="/admin/login"
+                                    onClick={(e) => {
+                                        setIsSidebarOpen(false);
+                                        handleAdminPanelClick(e);
+                                    }}
+                                    className="flex items-center gap-4 px-4 py-3 rounded-xl transition-all text-gray-400 hover:text-white hover:bg-white/5"
+                                >
+                                    <Settings size={20} />
+                                    <span className="font-medium">Panel Administrador</span>
+                                </a>
                             </nav>
                         </motion.div>
                     </div>
