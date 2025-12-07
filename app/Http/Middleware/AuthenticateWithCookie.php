@@ -5,7 +5,6 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Laravel\Sanctum\PersonalAccessToken;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -29,19 +28,11 @@ class AuthenticateWithCookie
             if ($accessToken) {
                 // Autenticar al usuario usando el token
                 Auth::login($accessToken->tokenable);
-                
-                Log::info('AuthenticateWithCookie: Usuario autenticado', [
-                    'user_id' => $accessToken->tokenable->id,
-                    'email' => $accessToken->tokenable->email,
-                    'role' => $accessToken->tokenable->role,
-                    'url' => $request->fullUrl()
-                ]);
             }
         }
 
         // Si no está autenticado después de intentar con la cookie, redirigir a login
         if (!Auth::check()) {
-            Log::warning('AuthenticateWithCookie: No autenticado, redirigiendo a login');
             return redirect('/admin/login');
         }
 

@@ -14,9 +14,31 @@ export const AuthProvider = ({ children }) => {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     }
 
+    // Función para leer cookies
+    const getCookie = (name) => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+        return null;
+    };
+
     useEffect(() => {
         const checkAuth = async () => {
-            if (token) {
+            // Primero intentar con token de localStorage
+            let authToken = token;
+
+            // Si no hay token en localStorage, intentar leer de cookie (admin)
+            if (!authToken) {
+                authToken = getCookie('admin_token');
+                if (authToken) {
+                    // Guardar en localStorage para consistencia
+                    localStorage.setItem('token', authToken);
+                    setToken(authToken);
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
+                }
+            }
+
+            if (authToken) {
                 try {
                     const response = await axios.get('/api/user');
                     setUser(response.data);

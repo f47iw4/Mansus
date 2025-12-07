@@ -76,16 +76,16 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        // Revocar TODOS los tokens del usuario (cierra todas las sesiones)
+        // Revoke the token that was used to authenticate the current request
         if ($request->user()) {
-            $request->user()->tokens()->delete();
+            $request->user()->currentAccessToken()->delete();
         }
         
         // Logout from web session
         Auth::logout();
 
         return response()->json([
-            'message' => 'Sesión cerrada exitosamente. Todas las sesiones han sido revocadas.'
+            'message' => 'Sesión cerrada exitosamente'
         ]);
     }
 

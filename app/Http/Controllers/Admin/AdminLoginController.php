@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use App\Models\User;
 
 class AdminLoginController extends Controller
@@ -22,54 +21,40 @@ class AdminLoginController extends Controller
             'password' => 'required',
         ]);
 
-        // Buscar usuario manualmente (sin crear sesión web)
-        $user = User::where('email', $credentials['email'])->first();
-
-        // Verificar credenciales manualmente
-        if (!$user || !\Hash::check($credentials['password'], $user->password)) {
+        // Intentar autenticación
+        if (!Auth::attempt($credentials)) {
             return back()->withErrors([
                 'email' => 'Las credenciales no coinciden con nuestros registros.',
             ]);
         }
 
+        $user = Auth::user();
+
         // Verificar que sea admin
         if ($user->role !== 'admin') {
+            Auth::logout();
             return back()->withErrors([
                 'email' => 'No tienes permisos de administrador.',
             ]);
         }
 
-        // Verificar si el usuario tiene tokens activos (sesiones previas)
-        $existingTokens = $user->tokens()->count();
-        
-        if ($existingTokens > 0) {
-            // Hay sesiones activas, cerrarlas automáticamente
-            $user->tokens()->delete();
-            
-            // Informar al usuario
-            session()->flash('info', 'Se cerró tu sesión anterior automáticamente.');
-        }
+        // Revocar todos los tokens existentes del usuario (cierra otras sesiones)
+        $user->tokens()->delete();
 
-        // Generar nuevo token Sanctum (SIN crear sesión web)
+        // Generar nuevo token Sanctum
         $token = $user->createToken('admin_token')->plainTextToken;
 
         // Guardar token en cookie segura (httpOnly)
-        return redirect('/admin/productos')
-            ->withCookie(cookie('admin_token', $token, 60 * 24 * 7, '/', null, false, true))
-            ->with('success', 'Bienvenido al panel de administración.');
+        return redirect('/admin/productos')->withCookie(
+            cookie('admin_token', $token, 60 * 24 * 7, '/', null, true, true) // 7 días, httpOnly, secure
+        );
     }
 
     public function logout(Request $request)
     {
-        // Revocar TODOS los tokens del usuario (cierra todas las sesiones)
+        // Revocar el token actual
         if (Auth::check()) {
-            $user = Auth::user();
-            $user->tokens()->delete();
-            
-            Log::info('Admin logout: Todos los tokens revocados', [
-                'user_id' => $user->id,
-                'email' => $user->email
-            ]);
+            Auth::user()->currentAccessToken()?->delete();
         }
 
         Auth::logout();
