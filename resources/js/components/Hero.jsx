@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const slides = [
     {
@@ -8,26 +9,30 @@ const slides = [
         image: 'https://images.unsplash.com/photo-1622434641406-a158123450f9?q=80&w=2504&auto=format&fit=crop',
         title: 'MANSUS JOYERÍA',
         subtitle: 'Nueva Colección',
-        cta: 'Descubrir Catálogo'
+        cta: 'Descubrir Catálogo',
+        link: '/joyas'
     },
     {
         id: 2,
         image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=2070&auto=format&fit=crop',
         title: 'ELEGANCIA ATEMPORAL',
         subtitle: 'Relojes Exclusivos',
-        cta: 'Ver Relojes'
+        cta: 'Ver Relojes',
+        link: '/relojes'
     },
     {
         id: 3,
         image: 'https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?q=80&w=2515&auto=format&fit=crop',
         title: 'BRILLO ETERNO',
         subtitle: 'Diamantes Certificados',
-        cta: 'Explorar'
+        cta: 'Explorar',
+        link: '/joyas'
     }
 ];
 
 export default function Hero() {
     const [current, setCurrent] = useState(0);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -84,6 +89,7 @@ export default function Hero() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.9, duration: 0.8 }}
+                        onClick={() => navigate(slides[current].link)}
                         className="border border-white px-10 py-4 text-sm uppercase tracking-widest text-white hover:bg-white hover:text-gray-900 transition duration-300"
                     >
                         {slides[current].cta}
