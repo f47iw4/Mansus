@@ -41,6 +41,7 @@ export const AuthProvider = ({ children }) => {
             const { token, user } = response.data;
 
             localStorage.setItem('token', token);
+            localStorage.setItem('user', JSON.stringify(user)); // ← GUARDAR USUARIO
             setToken(token);
             setUser(user);
             setIsAuthenticated(true);
@@ -77,18 +78,18 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            if (token) {
-                await axios.post('/api/logout');
-            }
+            await axios.post('/api/logout');
         } catch (error) {
-            console.error('Error al cerrar sesión en servidor:', error);
-        } finally {
-            localStorage.removeItem('token');
-            setToken(null);
-            setUser(null);
-            setIsAuthenticated(false);
-            delete axios.defaults.headers.common['Authorization'];
+            console.error('Error al cerrar sesión:', error);
         }
+
+        // Limpiar TODOS los datos de autenticación
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        setToken(null);
+        setUser(null);
+        setIsAuthenticated(false);
+        delete axios.defaults.headers.common['Authorization'];
     };
 
     return (

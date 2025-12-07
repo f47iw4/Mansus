@@ -21,11 +21,18 @@ export default function Login() {
 
         if (isLogin) {
             const result = await login(email, password);
+            console.log('Login result:', result); // DEBUG
+
             if (result.success) {
+                console.log('User email:', result.user?.email); // DEBUG
+                console.log('Is admin?', result.user?.email === 'admin@mansus.com'); // DEBUG
+
                 // Si el usuario es admin, redirigir al panel de administración
                 if (result.user && result.user.email === 'admin@mansus.com') {
+                    console.log('Redirecting to /admin'); // DEBUG
                     navigate('/admin');
                 } else {
+                    console.log('Redirecting to /'); // DEBUG
                     // Usuarios normales van a la landing page
                     navigate('/');
                 }
