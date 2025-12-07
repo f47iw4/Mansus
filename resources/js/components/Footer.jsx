@@ -28,7 +28,6 @@ export default function Footer() {
                             <li><a href="/#/joyas" className="hover:text-white transition">Joyas</a></li>
                             <li><a href="/#/relojes" className="hover:text-white transition">Relojes</a></li>
                             <li><a href="/#/marca" className="hover:text-white transition">Nuestra Historia</a></li>
-                            <li><a href="/#/admin" className="hover:text-white transition">Panel Admin</a></li>
                         </ul>
                     </div>
 
