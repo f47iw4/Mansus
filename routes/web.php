@@ -26,7 +26,7 @@ Route::get('/productos/{producto}', [ProductoController::class, 'show'])->name('
 // ====================== Rutas ADMIN ======================
 Route::prefix('admin')
     ->as('admin.')
-    ->middleware(['auth', 'is_admin']) // Protect all admin routes
+    ->middleware(['auth.cookie', 'is_admin']) // Use cookie-based Sanctum auth
     ->group(function () {
         // Dashboard
         Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
