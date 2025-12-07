@@ -22,9 +22,11 @@ export default function Login() {
         if (isLogin) {
             const result = await login(email, password);
             if (result.success) {
-                if (result.role === 'admin') {
+                // Si el usuario es admin, redirigir al panel de administración
+                if (result.user && result.user.email === 'admin@mansus.com') {
                     navigate('/admin');
                 } else {
+                    // Usuarios normales van a la landing page
                     navigate('/');
                 }
             } else {
