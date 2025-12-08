@@ -25,7 +25,10 @@ export default function Login() {
             if (result.success) {
                 // Redirigir según el tipo de usuario
                 if (result.user && result.user.email === 'admin@mansus.com') {
-                    window.location.href = '/admin/productos'; // Panel Administrador (Blade)
+                    // Esperar un momento para asegurar que la cookie de sesión se ha establecido
+                    setTimeout(() => {
+                        window.location.href = '/admin/productos'; // Panel Administrador (Blade)
+                    }, 500);
                 } else if (result.user && result.user.email === 'supervisor@mansus.com') {
                     navigate('/admin'); // Panel Supervisor (React)
                 } else {
