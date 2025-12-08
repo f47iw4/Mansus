@@ -1,4 +1,4 @@
-# 💎 DOCUMENTACIÓN DEL PROYECTO TFG: MANSUS
+# MANSUS
 
 ## 1. Descripción del Proyecto
 **MANSUS** es una plataforma de comercio electrónico moderna especializada en joyería y relojería exclusiva. Este proyecto destaca por su arquitectura híbrida y su sistema de seguridad avanzado, diseñado para separar las responsabilidades operativas y administrativas.
