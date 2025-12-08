@@ -30,13 +30,13 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'client', // Default role
+            'role' => 'client', // Rol por defecto
         ]);
 
-        // Login for web session (Blade routes)
+        // Login para web session (Blade routes)
         Auth::login($user);
         
-        // Create token for API (React/Sanctum)
+        // Crear token para API (React/Sanctum)
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
@@ -61,10 +61,10 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->firstOrFail();
         
-        // Login for web session (Blade routes)
+        // Login para web session (Blade routes)
         Auth::login($user);
         
-        // Create token for API (React/Sanctum)
+        // Crear token para API (React/Sanctum)
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
@@ -76,12 +76,12 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        // Revoke the token that was used to authenticate the current request
+        // Revoke el token que se usó para la solicitud actual
         if ($request->user()) {
             $request->user()->currentAccessToken()->delete();
         }
         
-        // Logout from web session
+        // Logout de web session
         Auth::logout();
 
         return response()->json([

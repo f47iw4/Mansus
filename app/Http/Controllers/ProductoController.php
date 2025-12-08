@@ -38,7 +38,7 @@ class ProductoController extends Controller
     }
 
     /**
-     * API endpoint - Return active products as JSON for the frontend
+     * API endpoint - Devuelve productos activos como json para el front
      */
     public function apiIndex()
     {

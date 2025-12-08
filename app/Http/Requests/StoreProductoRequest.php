@@ -27,7 +27,7 @@ class StoreProductoRequest extends FormRequest
             'precio' => 'required|numeric|gt:0',
             'stock' => 'required|integer|gt:0',
             'activo' => 'boolean',
-            'imagen' => 'nullable|image|max:2048', // Max 2MB
+            'imagen' => 'nullable|image|max:2048',
         ];
     }
 

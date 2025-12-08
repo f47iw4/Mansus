@@ -23,16 +23,16 @@ class ProductoPolicy
     }
 
     /**
-     * Determine whether the user can view any products.
+     * Determina si el usuario puede ver cualquier producto.
      */
     public function viewAny(User $user): bool
     {
-        // Adjust logic as needed; for now allow all authenticated users
+        // Ajusta la lógica según sea necesario; por ahora permite a todos los usuarios autenticados
         return true;
     }
 
     /**
-     * Determine whether the user can view the product.
+     * Determina si el usuario puede ver el producto.
      */
     public function view(User $user, Producto $producto): bool
     {
@@ -40,7 +40,7 @@ class ProductoPolicy
     }
 
     /**
-     * Determine whether the user can create products.
+     * Determina si el usuario puede crear un producto.
      */
     public function create(User $user): bool
     {
@@ -48,7 +48,7 @@ class ProductoPolicy
     }
 
     /**
-     * Determine whether the user can update the product.
+     * Determina si el usuario puede actualizar el producto.
      */
     public function update(User $user, Producto $producto): bool
     {
@@ -56,7 +56,7 @@ class ProductoPolicy
     }
 
     /**
-     * Determine whether the user can delete the product.
+     *  Determina si el usuario puede eliminar el producto.
      */
     public function delete(User $user, Producto $producto): bool
     {

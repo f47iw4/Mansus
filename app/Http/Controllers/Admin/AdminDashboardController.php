@@ -19,7 +19,7 @@ class AdminDashboardController extends Controller
         // Estadísticas de clientes
         $totalClientes = User::count();
         
-        // Clientes VIP (más de 10 pedidos) - ajustamos con la tabla pedidos
+        // Clientes VIP (futuro?) (más de 10 pedidos) - ajustamos con la tabla pedidos
         // Por ahora simulamos con 0
         $clientesVIP = 0; // User::has('pedidos', '>=', 10)->count();
         

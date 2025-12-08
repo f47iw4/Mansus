@@ -53,7 +53,7 @@ class Kernel extends HttpKernel
     ];
 
     /**
-     * The application's middleware aliases.
+     * los alias del middleware
      *
      * @var array<string, class-string|string>
      */

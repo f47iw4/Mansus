@@ -14,19 +14,19 @@ Route::get('/login', function () {
     return view('app');
 })->name('login');
 
-// Traditional Admin Login (for Blade CRUD access)
+// Accesos al CRUD del administrador (Blade)
 Route::get('/admin/login', [App\Http\Controllers\Admin\AdminLoginController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [App\Http\Controllers\Admin\AdminLoginController::class, 'login'])->name('admin.login.post');
 Route::post('/admin/logout-web', [App\Http\Controllers\Admin\AdminLoginController::class, 'logout'])->name('admin.logout.web');
 
-// Rutas públicas para el catálogo de productos (Backend Rendered - si se usan)
+// Rutas públicas para el catálogo de productos 
 Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index');
 Route::get('/productos/{producto}', [ProductoController::class, 'show'])->name('productos.show');
 
 // ====================== Rutas ADMIN ======================
 Route::prefix('admin')
     ->as('admin.')
-    ->middleware(['auth', 'is_admin']) // Protect all admin routes
+    ->middleware(['auth', 'is_admin']) // Protege todas las rutas del admin
     ->group(function () {
         // Dashboard (Accesible por ambos roles)
         Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
