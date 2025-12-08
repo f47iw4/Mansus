@@ -17,12 +17,14 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-// Public Auth Routes
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+// Public Auth Routes (Stateful for Web Session + Token)
+Route::middleware('stateful_api')->group(function () {
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/login', [AuthController::class, 'login']);
+});
 
 // Protected User Route
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', 'stateful_api'])->group(function () {
     Route::get('/user', [AuthController::class, 'user']);
     Route::post('/logout', [AuthController::class, 'logout']);
 });

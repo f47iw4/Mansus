@@ -11,7 +11,6 @@ class StoreProductoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        // You can add policy check here if needed
         return true;
     }
 

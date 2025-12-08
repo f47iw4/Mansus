@@ -34,8 +34,6 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         try {
-            // CSRF cookie call removed for token-based auth
-
 
             const response = await axios.post('/api/login', { email, password });
             const { token, user } = response.data;
@@ -57,7 +55,6 @@ export const AuthProvider = ({ children }) => {
 
     const register = async (name, email, password) => {
         try {
-            // CSRF cookie call removed for token-based auth
 
             const response = await axios.post('/api/register', { name, email, password });
             const { token, user } = response.data;
@@ -83,7 +80,7 @@ export const AuthProvider = ({ children }) => {
             console.error('Error al cerrar sesión:', error);
         }
 
-        // Limpiar TODOS los datos de autenticación
+        // Limpiar TODOS los datos de autenticación 
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         setToken(null);
