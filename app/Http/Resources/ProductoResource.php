@@ -24,7 +24,11 @@ class ProductoResource extends JsonResource
             'precio' => $this->precio,
             'stock' => $this->stock,
             'activo' => $this->activo,
-            'imagen' => $this->imagen,
+            'imagen' => $this->imagen ? (
+                preg_match('/^(http|data:)/', $this->imagen) 
+                    ? $this->imagen 
+                    : asset($this->imagen)
+            ) : null,
             'ventas' => $this->ventas,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

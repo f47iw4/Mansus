@@ -14,26 +14,10 @@ import {
     Settings
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useAuth } from '../context/AuthContext';
 
 export default function AdminLayout() {
-    const { user, logout, isLoading } = useAuth(); // Añadimos logout
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const location = useLocation();
-
-    // Verificación de seguridad adicional
-    React.useEffect(() => {
-        if (!isLoading && user && user.role !== 'admin') {
-            // Si entra alguien que no es admin, logout forzoso y fuera
-            logout();
-            window.location.href = '/login';
-        }
-    }, [user, isLoading, logout]);
-
-    // Si no es admin, no renderizar nada (evita parpadeo)
-    if (!user || user.role !== 'admin') {
-        return null;
-    }
 
     const navItems = [
         { name: 'Dashboard', path: '/admin', icon: LayoutDashboard, isReact: true },
